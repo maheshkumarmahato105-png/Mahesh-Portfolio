@@ -15,7 +15,7 @@ const portfolio: PortfolioConfig = {
   headline: "I build digital experiences that feel effortless.",
   introduction:
     "A passionate web developer crafting clean, interactive, and performant user interfaces with HTML, CSS, JavaScript, React, and modern web technologies.",
-  email: "your.email@example.com", // ← Replace with your real email
+  email: "maheshkumarmahato789@gmail.com",
 
   // ─── Resume ───
   // Place your resume PDF at public/resume.pdf and uncomment:
@@ -34,7 +34,7 @@ const portfolio: PortfolioConfig = {
   social: [
     {
       platform: "GitHub",
-      url: "https://github.com/", // ← Replace with your GitHub URL
+      url: "https://github.com/maheshkumarmahato105-png",
       icon: "github",
     },
     {

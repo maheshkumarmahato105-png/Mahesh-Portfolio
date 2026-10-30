@@ -144,9 +144,7 @@ export default function Contact({ data }: ContactProps) {
                 Get in touch
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
-                {data.formServiceUrl
-                  ? "Send an inquiry through the form below and I'll get back to you promptly."
-                  : "Submit the form to prepare a message directly in your mail client, or copy my email address."}
+                Send an inquiry through the form below, or reach out directly via email. I'll get back to you promptly.
               </p>
             </div>
 
@@ -232,19 +230,6 @@ export default function Contact({ data }: ContactProps) {
               </div>
             </div>
 
-            {/* Service Setup Notice */}
-            {!data.formServiceUrl && (
-              <div className="flex items-start gap-2 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 text-xs leading-relaxed text-amber-300/80">
-                <AlertCircle size={15} className="mt-0.5 shrink-0 text-amber-400" />
-                <p>
-                  To receive form submissions directly to an inbox without opening an email client, enter a Formspree or EmailJS endpoint in{" "}
-                  <code className="rounded bg-black/30 px-1 py-0.5 text-amber-200">
-                    src/data/portfolio.ts
-                  </code>
-                  .
-                </p>
-              </div>
-            )}
           </motion.div>
 
           {/* Right: Functional Form - reveals upon scrolling down */}
