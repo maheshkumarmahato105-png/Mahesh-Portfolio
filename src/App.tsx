@@ -10,7 +10,6 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import InteractiveCanvas from "@/components/InteractiveCanvas";
 
 const sectionIds = ["home", "about", "skills", "projects", "contact"];
 
@@ -19,8 +18,7 @@ export default function App() {
   const { activeSection, setActiveSection } = useActiveSection(sectionIds);
 
   return (
-    <div className={`min-h-screen bg-(--color-bg) text-(--color-text-primary) selection:bg-(--color-accent) selection:text-white transition-colors duration-500 ${isDark ? "dark" : "light"}`}>
-      <InteractiveCanvas />
+    <div className={`min-h-screen bg-[#0a0a0a] text-[#f5f5f7] selection:bg-[#2997ff] selection:text-white transition-colors duration-500 ${isDark ? "dark" : "light"}`}>
       <Navbar
         links={portfolio.navLinks}
         activeSection={activeSection}

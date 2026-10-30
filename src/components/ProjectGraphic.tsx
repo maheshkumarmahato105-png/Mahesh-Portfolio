@@ -9,22 +9,21 @@ interface ProjectGraphicProps {
 
 export default function ProjectGraphic({ id, title, category, className = "" }: ProjectGraphicProps) {
   if (id === "project-1") {
-    // Weather Dashboard
+    // Weather Dashboard — Apple style
     return (
-      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br from-indigo-950/60 via-slate-900 to-black p-6 ${className}`}>
-        {/* Ambient glow */}
-        <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-amber-500/20 blur-3xl" />
-        <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-indigo-500/20 blur-3xl" />
+      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0d0d0f] p-6 ${className}`}>
+        {/* Subtle radial ambient glow */}
+        <div className="absolute -right-8 -top-8 h-44 w-44 rounded-full bg-[radial-gradient(circle,rgba(41,151,255,0.15)_0%,transparent_70%)] blur-2xl" />
 
-        {/* Mock Weather Card */}
-        <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-white/4 p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-105">
+        {/* Apple Weather Card */}
+        <div className="relative w-full max-w-sm rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.02]">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] pb-3">
             <div>
-              <div className="text-xs font-semibold text-white/90">San Francisco</div>
-              <div className="text-[10px] text-white/50">Real-Time Forecast</div>
+              <div className="text-xs font-semibold text-[#f5f5f7]">San Francisco</div>
+              <div className="text-[10px] text-[#86868b]">Real-Time Forecast</div>
             </div>
-            <div className="flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-medium text-amber-300">
+            <div className="flex items-center gap-1 rounded-full bg-[#1c1c1e] border border-[rgba(255,255,255,0.08)] px-2 py-0.5 text-[10px] font-medium text-[#2997ff]">
               <CloudSun size={12} />
               <span>Sunny</span>
             </div>
@@ -33,24 +32,24 @@ export default function ProjectGraphic({ id, title, category, className = "" }: 
           {/* Main Weather Display */}
           <div className="my-4 flex items-center justify-between">
             <div>
-              <div className="text-4xl font-extralight tracking-tight text-white">
-                22<span className="text-2xl font-light text-amber-400">°C</span>
+              <div className="text-4xl font-extralight tracking-tight text-[#f5f5f7]">
+                22<span className="text-2xl font-light text-[#2997ff]">°C</span>
               </div>
-              <div className="text-[11px] text-white/60">Partly Cloudy • High 25°</div>
+              <div className="text-[11px] text-[#a1a1a6]">Partly Cloudy • High 25°</div>
             </div>
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-tr from-amber-500/30 via-orange-500/20 to-transparent p-2">
-              <CloudSun size={32} className="text-amber-300 drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]" />
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1c1c1e] border border-[rgba(255,255,255,0.1)] p-2">
+              <CloudSun size={30} className="text-[#2997ff]" />
             </div>
           </div>
 
           {/* Metrics Row */}
           <div className="grid grid-cols-2 gap-2 pt-2">
-            <div className="flex items-center gap-2 rounded-xl bg-white/3 p-2 text-[10px] text-white/70">
-              <Wind size={12} className="text-indigo-400" />
+            <div className="flex items-center gap-2 rounded-xl bg-[#1c1c1e] border border-[rgba(255,255,255,0.06)] p-2 text-[10px] text-[#a1a1a6]">
+              <Wind size={12} className="text-[#2997ff]" />
               <span>Wind: 14 km/h</span>
             </div>
-            <div className="flex items-center gap-2 rounded-xl bg-white/3 p-2 text-[10px] text-white/70">
-              <Droplets size={12} className="text-sky-400" />
+            <div className="flex items-center gap-2 rounded-xl bg-[#1c1c1e] border border-[rgba(255,255,255,0.06)] p-2 text-[10px] text-[#a1a1a6]">
+              <Droplets size={12} className="text-[#2997ff]" />
               <span>Humidity: 58%</span>
             </div>
           </div>
@@ -60,57 +59,56 @@ export default function ProjectGraphic({ id, title, category, className = "" }: 
   }
 
   if (id === "project-2") {
-    // Task Manager
+    // Task Manager — Apple style
     return (
-      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br from-purple-950/60 via-slate-900 to-black p-6 ${className}`}>
-        {/* Ambient glow */}
-        <div className="absolute -left-6 -top-6 h-36 w-36 rounded-full bg-purple-500/20 blur-3xl" />
-        <div className="absolute -bottom-6 -right-6 h-36 w-36 rounded-full bg-emerald-500/20 blur-3xl" />
+      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0d0d0f] p-6 ${className}`}>
+        {/* Subtle radial ambient glow */}
+        <div className="absolute -left-6 -top-6 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(41,151,255,0.12)_0%,transparent_70%)] blur-2xl" />
 
-        {/* Mock Kanban/Task Card */}
-        <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-white/4 p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-105">
+        {/* Apple Task Board Card */}
+        <div className="relative w-full max-w-sm rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.02]">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] pb-3">
             <div className="flex items-center gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-red-400/80" />
-              <div className="h-2 w-2 rounded-full bg-amber-400/80" />
-              <div className="h-2 w-2 rounded-full bg-emerald-400/80" />
-              <span className="ml-1 text-xs font-semibold text-white/90">Task Board</span>
+              <div className="h-2 w-2 rounded-full bg-white/30" />
+              <div className="h-2 w-2 rounded-full bg-white/20" />
+              <div className="h-2 w-2 rounded-full bg-[#2997ff]" />
+              <span className="ml-1 text-xs font-semibold text-[#f5f5f7]">Task Pipeline</span>
             </div>
-            <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-[10px] font-medium text-purple-300">
+            <span className="rounded-full bg-[#1c1c1e] border border-[rgba(255,255,255,0.08)] px-2 py-0.5 text-[10px] font-medium text-[#2997ff]">
               3 Active
             </span>
           </div>
 
           {/* Tasks List */}
           <div className="mt-3 space-y-2">
-            <div className="flex items-center justify-between rounded-xl border border-white/5 bg-white/3 p-2.5">
+            <div className="flex items-center justify-between rounded-xl border border-[rgba(255,255,255,0.06)] bg-[#1c1c1e] p-2.5">
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={14} className="text-emerald-400" />
-                <span className="text-xs text-white/90">Design System V2</span>
+                <CheckCircle2 size={13} className="text-[#2997ff]" />
+                <span className="text-xs text-[#f5f5f7]">Design System Architecture</span>
               </div>
-              <span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-medium text-emerald-300">
-                Done
+              <span className="rounded bg-[#2997ff]/10 px-1.5 py-0.5 text-[9px] font-medium text-[#2997ff]">
+                Completed
               </span>
             </div>
 
-            <div className="flex items-center justify-between rounded-xl border border-purple-500/30 bg-purple-500/10 p-2.5">
+            <div className="flex items-center justify-between rounded-xl border border-[#2997ff]/30 bg-[#2997ff]/5 p-2.5">
               <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full border-2 border-purple-400" />
-                <span className="text-xs font-medium text-white">Interactive Drag & Drop</span>
+                <div className="h-3 w-3 rounded-full border-2 border-[#2997ff]" />
+                <span className="text-xs font-medium text-[#f5f5f7]">Fluid Gestures & Physics</span>
               </div>
-              <span className="rounded bg-purple-500/30 px-1.5 py-0.5 text-[9px] font-medium text-purple-200">
+              <span className="rounded bg-[#2997ff]/20 px-1.5 py-0.5 text-[9px] font-medium text-[#5eaeff]">
                 In Progress
               </span>
             </div>
 
-            <div className="flex items-center justify-between rounded-xl border border-white/5 bg-white/2 p-2.5 opacity-60">
+            <div className="flex items-center justify-between rounded-xl border border-[rgba(255,255,255,0.06)] bg-[#1c1c1e]/60 p-2.5 opacity-60">
               <div className="flex items-center gap-2">
-                <div className="h-3 w-3 rounded-full border-2 border-white/40" />
-                <span className="text-xs text-white/80">LocalStorage Sync</span>
+                <div className="h-3 w-3 rounded-full border-2 border-white/30" />
+                <span className="text-xs text-[#a1a1a6]">Offline Cache Sync</span>
               </div>
-              <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-white/60">
-                Todo
+              <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-[#86868b]">
+                Queued
               </span>
             </div>
           </div>
@@ -120,47 +118,47 @@ export default function ProjectGraphic({ id, title, category, className = "" }: 
   }
 
   if (id === "project-3") {
-    // Portfolio Website
+    // Portfolio Website — Apple style
     return (
-      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br from-violet-950/60 via-slate-900 to-black p-6 ${className}`}>
-        {/* Ambient glow */}
-        <div className="absolute -top-10 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl" />
+      <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0d0d0f] p-6 ${className}`}>
+        {/* Subtle radial ambient glow */}
+        <div className="absolute -top-10 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(41,151,255,0.12)_0%,transparent_70%)] blur-2xl" />
 
-        {/* Mock Browser Window */}
-        <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-white/4 p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-105">
+        {/* Apple Browser Preview */}
+        <div className="relative w-full max-w-sm rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.02]">
           {/* Top Window Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] pb-3">
             <div className="flex items-center gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-red-400/80" />
-              <div className="h-2 w-2 rounded-full bg-amber-400/80" />
-              <div className="h-2 w-2 rounded-full bg-emerald-400/80" />
+              <div className="h-2 w-2 rounded-full bg-white/20" />
+              <div className="h-2 w-2 rounded-full bg-white/20" />
+              <div className="h-2 w-2 rounded-full bg-white/20" />
             </div>
-            <div className="rounded-full bg-white/6 px-3 py-0.5 text-[9px] text-white/50">
-              portfolio.dev
+            <div className="rounded-full bg-[#1c1c1e] px-3 py-0.5 text-[9px] text-[#86868b] border border-[rgba(255,255,255,0.06)]">
+              portfolio.mahesh.dev
             </div>
-            <Sparkles size={12} className="text-indigo-400" />
+            <Sparkles size={12} className="text-[#2997ff]" />
           </div>
 
           {/* Mock Hero Preview */}
           <div className="mt-4 space-y-2 text-center">
-            <div className="inline-flex items-center gap-1 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2 py-0.5 text-[9px] text-indigo-300">
-              <span>Modern Spatial Design</span>
+            <div className="inline-flex items-center gap-1 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] px-2 py-0.5 text-[9px] text-[#2997ff]">
+              <span>Minimal & Fluid</span>
             </div>
-            <div className="text-base font-bold tracking-tight text-white">
-              Digital Experiences
+            <div className="text-base font-semibold tracking-tight text-[#f5f5f7]">
+              Effortless Experiences
             </div>
             <div className="mx-auto h-1.5 w-3/4 rounded-full bg-white/10" />
             <div className="mx-auto h-1.5 w-1/2 rounded-full bg-white/10" />
 
             {/* Feature Pills */}
             <div className="flex items-center justify-center gap-1.5 pt-2">
-              <span className="rounded-md bg-white/6 px-2 py-0.5 text-[8px] text-white/70">
-                Framer Motion
+              <span className="rounded-full bg-[#1c1c1e] border border-[rgba(255,255,255,0.06)] px-2.5 py-0.5 text-[8px] text-[#a1a1a6]">
+                Motion
               </span>
-              <span className="rounded-md bg-white/6 px-2 py-0.5 text-[8px] text-white/70">
+              <span className="rounded-full bg-[#1c1c1e] border border-[rgba(255,255,255,0.06)] px-2.5 py-0.5 text-[8px] text-[#a1a1a6]">
                 Tailwind CSS
               </span>
-              <span className="rounded-md bg-white/6 px-2 py-0.5 text-[8px] text-white/70">
+              <span className="rounded-full bg-[#1c1c1e] border border-[rgba(255,255,255,0.06)] px-2.5 py-0.5 text-[8px] text-[#a1a1a6]">
                 TypeScript
               </span>
             </div>
@@ -170,15 +168,15 @@ export default function ProjectGraphic({ id, title, category, className = "" }: 
     );
   }
 
-  // Geometric spatial preview
+  // Generic fallback preview
   return (
-    <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br from-surface to-bg-elevated ${className}`}>
-      <div className="relative">
-        <div className="h-20 w-20 rounded-3xl bg-linear-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/10 p-5 shadow-inner">
-          <Layout size={40} className="text-indigo-400 opacity-60" />
+    <div className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0d0d0f] ${className}`}>
+      <div className="relative text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#161616] border border-[rgba(255,255,255,0.12)] text-[#2997ff]">
+          <Layout size={32} />
         </div>
-        <div className="mt-2 text-center text-xs font-medium text-white/60">{title}</div>
-        <div className="text-center text-[10px] text-white/40">{category}</div>
+        <div className="mt-3 text-xs font-semibold text-[#f5f5f7]">{title}</div>
+        <div className="text-[10px] text-[#86868b]">{category}</div>
       </div>
     </div>
   );

@@ -15,19 +15,18 @@ import {
 import type { Skill } from "@/types";
 import { prefersReducedMotion } from "@/lib/utils";
 import SectionHeading from "@/components/SectionHeading";
-import Tilt3D from "@/components/Tilt3D";
 
 const iconMap: Record<string, ReactNode> = {
-  "code-2": <Code2 size={24} />,
-  palette: <Palette size={24} />,
-  "file-code-2": <FileCode2 size={24} />,
-  atom: <Atom size={24} />,
-  "shield-check": <ShieldCheck size={24} />,
-  wind: <Wind size={24} />,
-  "git-branch": <GitBranch size={24} />,
-  smartphone: <Smartphone size={24} />,
-  eye: <Eye size={24} />,
-  zap: <Zap size={24} />,
+  "code-2": <Code2 size={22} />,
+  palette: <Palette size={22} />,
+  "file-code-2": <FileCode2 size={22} />,
+  atom: <Atom size={22} />,
+  "shield-check": <ShieldCheck size={22} />,
+  wind: <Wind size={22} />,
+  "git-branch": <GitBranch size={22} />,
+  smartphone: <Smartphone size={22} />,
+  eye: <Eye size={22} />,
+  zap: <Zap size={22} />,
 };
 
 interface SkillsProps {
@@ -38,7 +37,6 @@ export default function Skills({ skills }: SkillsProps) {
   const reduced = prefersReducedMotion();
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  // Group by category and include "All"
   const categories = ["All", ...new Set(skills.map((s) => s.category))];
 
   const filteredSkills =
@@ -49,25 +47,25 @@ export default function Skills({ skills }: SkillsProps) {
   return (
     <section
       id="skills"
-      className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-[#0a0a0a] px-6 py-24 sm:py-32 lg:py-40"
     >
-      {/* Background accent */}
-      <div className="pointer-events-none absolute right-0 top-1/3 h-100 w-100 translate-x-1/3 rounded-full bg-linear-to-l from-purple-500/5 to-transparent blur-3xl" />
+      {/* Subtle ambient lighting */}
+      <div className="pointer-events-none absolute right-1/4 top-1/2 h-[500px] w-[500px] -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(41,151,255,0.05)_0%,transparent_70%)] blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
-          label="Skills"
-          title="Technologies I work with"
-          description="A specialized toolkit focused on modern frontend engineering, performance, and responsive interfaces."
+          label="Capabilities"
+          title="Engineered with modern tools."
+          description="A specialized toolkit focused on frontend architecture, rendering performance, and fluid responsive design."
         />
 
-        {/* Category filter pills - loads into view upon scrolling */}
+        {/* Minimal Category Filter Pills */}
         <motion.div
-          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="mt-10 flex flex-wrap justify-center gap-2"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          className="mt-12 flex flex-wrap justify-center gap-2"
           role="tablist"
           aria-label="Filter skills by category"
         >
@@ -77,10 +75,10 @@ export default function Skills({ skills }: SkillsProps) {
               onClick={() => setActiveCategory(cat)}
               role="tab"
               aria-selected={activeCategory === cat}
-              className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+              className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? "bg-(--color-accent) text-white shadow-(--color-accent-glow)"
-                  : "border border-(--color-border) text-(--color-text-muted) hover:border-(--color-border-hover) hover:text-(--color-text-primary)"
+                  ? "bg-[#2997ff] text-white shadow-xs"
+                  : "border border-[rgba(255,255,255,0.12)] bg-[#161616] text-[#a1a1a6] hover:border-[rgba(255,255,255,0.22)] hover:text-[#f5f5f7]"
               }`}
             >
               {cat}
@@ -88,7 +86,7 @@ export default function Skills({ skills }: SkillsProps) {
           ))}
         </motion.div>
 
-        {/* Skills Grid - progressively reveals on scroll down */}
+        {/* Skills Grid */}
         <div
           className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
           role="tabpanel"
@@ -98,57 +96,37 @@ export default function Skills({ skills }: SkillsProps) {
               <motion.div
                 key={skill.name}
                 layout
-                initial={{ opacity: 0, y: reduced ? 0 : 35, scale: reduced ? 1 : 0.92 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                initial={{ opacity: 0, y: reduced ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{
-                  delay: reduced ? 0 : 0.06 * (i % 5),
+                  delay: reduced ? 0 : 0.04 * (i % 5),
                   duration: 0.5,
-                  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+                  ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
                 }}
-                className="h-full"
+                className="group relative flex h-full flex-col justify-between rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 transition-all hover:border-[rgba(255,255,255,0.24)] hover:bg-[#1c1c1e]"
+                tabIndex={0}
+                role="article"
+                aria-label={`${skill.name} — ${skill.description}`}
               >
-                <Tilt3D maxTilt={10} glare={true} className="h-full rounded-2xl">
-                  <div
-                    tabIndex={0}
-                    role="article"
-                    aria-label={`${skill.name} — ${skill.description}`}
-                    className="group relative flex h-full flex-col justify-between cursor-pointer rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-5 backdrop-blur-sm transition-colors hover:border-(--color-border-hover) hover:bg-(--color-surface)"
-                  >
-                    {/* Glow on hover */}
-                    <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-(--color-accent-glow) to-transparent" />
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-[#2997ff] transition-transform duration-300 group-hover:scale-105">
+                      {iconMap[skill.icon] ?? <Code2 size={22} />}
                     </div>
-
-                    <div className="relative">
-                      <div
-                        style={{ transform: "translateZ(25px)" }}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="text-(--color-accent) transition-colors group-hover:text-(--color-accent-hover)">
-                          {iconMap[skill.icon] ?? <Code2 size={24} />}
-                        </div>
-                        <span className="rounded-full bg-white/4 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-(--color-text-muted)">
-                          {skill.category}
-                        </span>
-                      </div>
-
-                      <h3
-                        style={{ transform: "translateZ(18px)" }}
-                        className="mt-4 text-sm font-semibold text-(--color-text-primary)"
-                      >
-                        {skill.name}
-                      </h3>
-                      <p
-                        style={{ transform: "translateZ(14px)" }}
-                        className="mt-1 text-xs leading-relaxed text-(--color-text-muted) transition-colors group-hover:text-(--color-text-secondary)"
-                      >
-                        {skill.description}
-                      </p>
-                    </div>
+                    <span className="rounded-full bg-white/6 px-2 py-0.5 text-[9px] font-mono text-[#86868b]">
+                      {skill.category}
+                    </span>
                   </div>
-                </Tilt3D>
+
+                  <h3 className="mt-4 text-sm font-semibold tracking-tight text-[#f5f5f7]">
+                    {skill.name}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-[#86868b] transition-colors group-hover:text-[#a1a1a6]">
+                    {skill.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
