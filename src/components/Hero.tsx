@@ -47,7 +47,7 @@ export default function Hero({ data }: HeroProps) {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24 pb-16"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 sm:px-6 pt-24 pb-16"
     >
       {/* Cinematic Ambient Background Gradients */}
       <div className="pointer-events-none absolute inset-0">

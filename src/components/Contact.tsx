@@ -110,12 +110,12 @@ export default function Contact({ data }: ContactProps) {
   };
 
   const inputClasses =
-    "w-full rounded-2xl border border-(--color-border) bg-(--color-bg-glass) px-4 py-3.5 text-sm text-(--color-text-primary) placeholder-(--color-text-muted) backdrop-blur-sm transition-all focus:border-(--color-accent) focus:outline-none focus:ring-2 focus:ring-(--color-accent)/20";
+    "w-full rounded-2xl border border-(--color-border) bg-(--color-bg-glass) px-4 py-3.5 text-base sm:text-sm text-(--color-text-primary) placeholder-(--color-text-muted) backdrop-blur-sm transition-all focus:border-(--color-accent) focus:outline-none focus:ring-2 focus:ring-(--color-accent)/20";
 
   return (
     <section
       id="contact"
-      className="relative px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-32 lg:py-40"
     >
       {/* Background accents */}
       <div className="pointer-events-none absolute inset-0">

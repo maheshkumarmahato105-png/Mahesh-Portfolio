@@ -48,7 +48,7 @@ export default function Skills({ skills }: SkillsProps) {
   return (
     <section
       id="skills"
-      className="relative px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-32 lg:py-40"
     >
       {/* Background accent */}
       <div className="pointer-events-none absolute right-0 top-1/3 h-100 w-100 translate-x-1/3 rounded-full bg-linear-to-l from-purple-500/5 to-transparent blur-3xl" />

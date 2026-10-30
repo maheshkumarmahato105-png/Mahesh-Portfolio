@@ -180,7 +180,7 @@ export default function StoriesBar() {
   return (
     <>
       {/* Instagram Stories Carousel Row */}
-      <div className="relative mx-auto max-w-4xl px-4 py-6">
+      <div className="relative w-full overflow-hidden mx-auto max-w-4xl px-4 py-6">
         <div className="mb-3 flex items-center justify-between px-2">
           <div className="flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase text-(--color-text-muted)">
             <Sparkles size={13} className="text-rose-500" />
@@ -192,7 +192,7 @@ export default function StoriesBar() {
         </div>
 
         {/* Horizontal scroll container with hidden scrollbars */}
-        <div className="flex items-center gap-4 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex w-full items-center gap-3 sm:gap-4 overflow-x-auto pb-2 scrollbar-none overscroll-x-contain">
           {storiesData.map((story, i) => {
             const Icon = story.icon;
             const isSeen = seenStories[story.id];
@@ -208,7 +208,7 @@ export default function StoriesBar() {
               >
                 {/* Gradient Ring Avatar */}
                 <div
-                  className={`relative flex h-16 w-16 sm:h-18 sm:w-18 items-center justify-center rounded-full p-[2.5px] transition-transform duration-300 ${
+                  className={`relative flex h-14 w-14 sm:h-18 sm:w-18 items-center justify-center rounded-full p-[2.5px] transition-transform duration-300 ${
                     isSeen
                       ? "bg-(--color-border)"
                       : `bg-linear-to-tr ${story.gradient} shadow-sm`
@@ -217,7 +217,8 @@ export default function StoriesBar() {
                   {/* Inner Dark Background */}
                   <div className="flex h-full w-full items-center justify-center rounded-full bg-(--color-bg-elevated) p-1 border-2 border-(--color-bg)">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-(--color-surface) text-(--color-text-primary) transition-colors group-hover:text-(--color-accent)">
-                      <Icon size={22} className="transition-transform duration-300 group-hover:scale-110" />
+                      <Icon size={20} className="transition-transform duration-300 group-hover:scale-110 sm:hidden" />
+                      <Icon size={22} className="transition-transform duration-300 group-hover:scale-110 hidden sm:block" />
                     </div>
                   </div>
 
@@ -228,7 +229,7 @@ export default function StoriesBar() {
                 </div>
 
                 {/* Story Label */}
-                <span className="max-w-[72px] truncate text-[11px] font-medium text-(--color-text-secondary) group-hover:text-(--color-text-primary)">
+                <span className="max-w-[64px] sm:max-w-[72px] truncate text-[10px] sm:text-[11px] font-medium text-(--color-text-secondary) group-hover:text-(--color-text-primary)">
                   {story.name}
                 </span>
               </motion.button>

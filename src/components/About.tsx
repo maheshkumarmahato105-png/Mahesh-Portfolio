@@ -37,7 +37,7 @@ export default function About({ data }: AboutProps) {
   return (
     <section
       id="about"
-      className="relative px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-32 lg:py-40"
     >
       {/* Subtle background accent */}
       <div className="pointer-events-none absolute left-0 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-r from-indigo-500/5 to-transparent blur-3xl" />

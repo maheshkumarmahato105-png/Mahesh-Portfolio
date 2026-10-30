@@ -38,7 +38,7 @@ export default function Projects({ projects }: ProjectsProps) {
   return (
     <section
       id="projects"
-      className="relative px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden px-4 sm:px-6 py-20 sm:py-32 lg:py-40"
     >
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">

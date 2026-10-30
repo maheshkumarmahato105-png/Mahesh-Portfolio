@@ -356,8 +356,8 @@ export default function Navbar({
       </motion.header>
 
       {/* Mobile Instagram-Style Floating Bottom Navigation Bar (iPhone Style) */}
-      <div className="fixed bottom-4 inset-x-4 z-40 md:hidden pointer-events-none">
-        <div className="pointer-events-auto mx-auto flex max-w-sm items-center justify-around rounded-full border border-(--color-border) bg-(--color-bg-glass)/90 p-2 shadow-2xl backdrop-blur-2xl">
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none">
+        <div className="pointer-events-auto flex w-full items-center justify-between rounded-full border border-(--color-border) bg-(--color-bg-glass)/95 p-1.5 shadow-2xl backdrop-blur-2xl">
           {links.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId;
@@ -369,7 +369,7 @@ export default function Navbar({
                   triggerParticle(e);
                   scrollToSection(link.href);
                 }}
-                className="relative flex flex-col items-center justify-center px-3.5 py-1.5 transition-colors"
+                className="relative flex flex-1 flex-col items-center justify-center py-2 px-1 transition-colors"
                 aria-label={link.label}
               >
                 {/* Active Pill on Mobile */}
@@ -389,7 +389,7 @@ export default function Navbar({
                 <motion.div
                   animate={
                     isActive
-                      ? { scale: [1, 0.8, 1.3, 0.95, 1], y: [0, 2, -3, 0] }
+                      ? { scale: [1, 0.8, 1.28, 0.95, 1], y: [0, 2, -2.5, 0] }
                       : { scale: 1, y: 0 }
                   }
                   transition={{
@@ -409,7 +409,7 @@ export default function Navbar({
                 {isActive && (
                   <motion.span
                     layoutId="mobile-instagram-dot"
-                    className="absolute -bottom-1 h-1 w-1 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_6px_rgba(236,72,153,0.8)]"
+                    className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_6px_rgba(236,72,153,0.8)]"
                     transition={{
                       type: "spring",
                       stiffness: 500,
