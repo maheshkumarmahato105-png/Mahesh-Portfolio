@@ -17,6 +17,7 @@ import {
 import type { NavLink } from "@/types";
 import { cn, getHeaderOffset } from "@/lib/utils";
 import { smoothScrollTo } from "@/lib/smoothScroll";
+import MagneticButton from "@/components/MagneticButton";
 
 interface NavbarProps {
   links: NavLink[];
@@ -340,19 +341,19 @@ export default function Navbar({
               </AnimatePresence>
             </motion.button>
 
-            {/* Interactive Let's Talk CTA */}
-            <motion.button
+            {/* Interactive 3D Magnetic Let's Talk CTA */}
+            <MagneticButton
+              magneticStrength={8}
               onClick={(e) => {
                 triggerParticle(e);
                 scrollToSection("#contact");
               }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.94 }}
-              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover) cursor-pointer"
+              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover)"
+              ariaLabel="Contact Mahesh"
             >
               <Mail size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               <span>Let's Talk</span>
-            </motion.button>
+            </MagneticButton>
           </div>
 
           {/* Mobile Top Controls */}

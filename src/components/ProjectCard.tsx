@@ -13,6 +13,7 @@ import {
 import type { Project } from "@/types";
 import { prefersReducedMotion, copyToClipboard } from "@/lib/utils";
 import ProjectGraphic from "@/components/ProjectGraphic";
+import Tilt3D from "@/components/Tilt3D";
 
 interface ProjectCardProps {
   project: Project;
@@ -77,7 +78,7 @@ export default function ProjectCard({
   };
 
   return (
-    <motion.article
+    <motion.div
       layout
       initial={{ opacity: 0, y: reduced ? 0 : 45, scale: reduced ? 1 : 0.94 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -88,66 +89,72 @@ export default function ProjectCard({
         duration: 0.65,
         ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       }}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-(--color-border) bg-(--color-bg-glass) backdrop-blur-md transition-all hover:border-(--color-border-hover) shadow-sm hover:shadow-xl"
+      className="h-full"
     >
-      {/* ─── Instagram Post Header ─── */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-(--color-border)">
-        <div className="flex items-center gap-2.5">
-          {/* Avatar with Story gradient ring */}
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-tr from-amber-500 via-rose-500 to-purple-600 p-[1.5px]">
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-(--color-bg) font-bold text-xs text-(--color-text-primary)">
-              M
+      <Tilt3D maxTilt={7} glare={true} className="h-full rounded-3xl">
+        <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-(--color-border) bg-(--color-bg-glass) backdrop-blur-md transition-all hover:border-(--color-border-hover) shadow-sm hover:shadow-2xl">
+          {/* ─── Instagram Post Header ─── */}
+          <div
+            style={{ transform: "translateZ(20px)" }}
+            className="flex items-center justify-between px-4 py-3 border-b border-(--color-border)"
+          >
+            <div className="flex items-center gap-2.5">
+              {/* Avatar with Story gradient ring */}
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-tr from-amber-500 via-rose-500 to-purple-600 p-[1.5px]">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-(--color-bg) font-bold text-xs text-(--color-text-primary)">
+                  M
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-bold text-(--color-text-primary)">
+                  <span>mahesh.dev</span>
+                  <span className="h-1 w-1 rounded-full bg-blue-500" title="Verified Creator" />
+                </div>
+                <div className="text-[10px] text-(--color-text-muted)">
+                  {project.category}
+                </div>
+              </div>
             </div>
+
+            {/* Options / Details Icon */}
+            <button
+              onClick={() => onSelect(project)}
+              className="rounded-full p-1.5 text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary) cursor-pointer"
+              aria-label="View project details"
+            >
+              <MoreHorizontal size={18} />
+            </button>
           </div>
-          <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-(--color-text-primary)">
-              <span>mahesh.dev</span>
-              <span className="h-1 w-1 rounded-full bg-blue-500" title="Verified Creator" />
-            </div>
-            <div className="text-[10px] text-(--color-text-muted)">
-              {project.category}
-            </div>
-          </div>
-        </div>
 
-        {/* Options / Details Icon */}
-        <button
-          onClick={() => onSelect(project)}
-          className="rounded-full p-1.5 text-(--color-text-muted) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary)"
-          aria-label="View project details"
-        >
-          <MoreHorizontal size={18} />
-        </button>
-      </div>
+          {/* ─── Image Area with Double-Tap to Like (translateZ: 35px) ─── */}
+          <div
+            onClick={handleImageTap}
+            style={{ transform: "translateZ(35px)" }}
+            className="relative aspect-video w-full overflow-hidden bg-linear-to-br from-(--color-surface) to-(--color-bg-elevated) cursor-pointer select-none"
+          >
+            {project.imageUrl ? (
+              <img
+                src={project.imageUrl}
+                alt={`Screenshot of ${project.title}`}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
+            ) : (
+              <ProjectGraphic id={project.id} title={project.title} category={project.category} />
+            )}
 
-      {/* ─── Image Area with Double-Tap to Like ─── */}
-      <div
-        onClick={handleImageTap}
-        className="relative aspect-video w-full overflow-hidden bg-linear-to-br from-(--color-surface) to-(--color-bg-elevated) cursor-pointer select-none"
-      >
-        {project.imageUrl ? (
-          <img
-            src={project.imageUrl}
-            alt={`Screenshot of ${project.title}`}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
-          />
-        ) : (
-          <ProjectGraphic id={project.id} title={project.title} category={project.category} />
-        )}
+            {/* Sample Badge */}
+            {project.isSample && (
+              <div className="absolute right-3 top-3 rounded-full bg-amber-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-black backdrop-blur-sm shadow-md">
+                Sample
+              </div>
+            )}
 
-        {/* Sample Badge */}
-        {project.isSample && (
-          <div className="absolute right-3 top-3 rounded-full bg-amber-500/90 px-2.5 py-0.5 text-[10px] font-semibold text-black backdrop-blur-sm">
-            Sample
-          </div>
-        )}
-
-        {/* Giant Instagram Center Heart Burst on Double-Tap */}
-        <AnimatePresence>
+            {/* Giant Instagram Center Heart Burst on Double-Tap */}
+            <AnimatePresence>
           {showHeartBurst && (
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
@@ -285,6 +292,8 @@ export default function ProjectCard({
           </div>
         </div>
       </div>
-    </motion.article>
+    </article>
+  </Tilt3D>
+</motion.div>
   );
 }

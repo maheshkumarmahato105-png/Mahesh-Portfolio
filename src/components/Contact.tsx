@@ -4,6 +4,7 @@ import { Send, Copy, Check, Mail, Download, AlertCircle, ExternalLink } from "lu
 import type { PortfolioConfig, ContactFormData, ContactFormErrors } from "@/types";
 import { isValidEmail, copyToClipboard, prefersReducedMotion } from "@/lib/utils";
 import SectionHeading from "@/components/SectionHeading";
+import Tilt3D from "@/components/Tilt3D";
 
 interface ContactProps {
   data: PortfolioConfig;
@@ -148,66 +149,70 @@ export default function Contact({ data }: ContactProps) {
               </p>
             </div>
 
-            {/* Email Card with Copy button */}
-            <div className="rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-5 backdrop-blur-sm transition-colors hover:border-(--color-border-hover)">
-              <div className="flex items-center gap-2 text-xs font-medium text-(--color-text-muted)">
-                <Mail size={14} className="text-(--color-accent)" />
-                <span>DIRECT EMAIL</span>
+            {/* 3D Email Card with Copy button */}
+            <Tilt3D maxTilt={7} glare={true} className="rounded-2xl">
+              <div className="rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-5 backdrop-blur-sm transition-colors hover:border-(--color-border-hover)">
+                <div style={{ transform: "translateZ(15px)" }} className="flex items-center gap-2 text-xs font-medium text-(--color-text-muted)">
+                  <Mail size={14} className="text-(--color-accent)" />
+                  <span>DIRECT EMAIL</span>
+                </div>
+                <div style={{ transform: "translateZ(20px)" }} className="mt-2.5 flex items-center justify-between gap-3">
+                  <a
+                    href={`mailto:${data.email}`}
+                    className="text-sm font-semibold text-(--color-text-primary) hover:underline break-all"
+                  >
+                    {data.email}
+                  </a>
+                  <button
+                    onClick={handleCopyEmail}
+                    className="flex shrink-0 items-center gap-1.5 rounded-xl border border-(--color-border) bg-(--color-surface) px-3 py-1.5 text-xs font-medium text-(--color-text-secondary) transition-all hover:border-(--color-border-hover) hover:text-(--color-text-primary) cursor-pointer"
+                    aria-label="Copy email address to clipboard"
+                  >
+                    {copied ? (
+                      <>
+                        <Check size={13} className="text-emerald-400" />
+                        <span className="text-emerald-400">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={13} />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
-              <div className="mt-2.5 flex items-center justify-between gap-3">
-                <a
-                  href={`mailto:${data.email}`}
-                  className="text-sm font-semibold text-(--color-text-primary) hover:underline break-all"
-                >
-                  {data.email}
-                </a>
-                <button
-                  onClick={handleCopyEmail}
-                  className="flex shrink-0 items-center gap-1.5 rounded-xl border border-(--color-border) bg-(--color-surface) px-3 py-1.5 text-xs font-medium text-(--color-text-secondary) transition-all hover:border-(--color-border-hover) hover:text-(--color-text-primary)"
-                  aria-label="Copy email address to clipboard"
-                >
-                  {copied ? (
-                    <>
-                      <Check size={13} className="text-emerald-400" />
-                      <span className="text-emerald-400">Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={13} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
+            </Tilt3D>
 
-            {/* Resume Download (or Direct Email Request) */}
-            {data.resumeUrl ? (
-              <a
-                href={data.resumeUrl}
-                download
-                className="flex items-center justify-between rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-sm font-medium text-(--color-text-primary) backdrop-blur-sm transition-all hover:border-(--color-border-hover) hover:bg-(--color-surface)"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Download size={16} className="text-(--color-accent)" />
-                  <span>Download Curriculum Vitae</span>
-                </div>
-                <span className="text-xs text-(--color-text-muted)">PDF</span>
-              </a>
-            ) : (
-              <a
-                href={`mailto:${data.email}?subject=${encodeURIComponent("Curriculum Vitae Request — Mahesh Kumar Mahato")}`}
-                className="group flex items-center justify-between rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-sm font-medium text-(--color-text-primary) backdrop-blur-sm transition-all hover:border-(--color-accent) hover:bg-(--color-surface)"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Download size={16} className="text-(--color-accent) transition-transform group-hover:-translate-y-0.5" />
-                  <span>Curriculum Vitae</span>
-                </div>
-                <span className="text-xs font-semibold text-(--color-accent) group-hover:underline">
-                  Request via Email →
-                </span>
-              </a>
-            )}
+            {/* 3D Resume Download (or Direct Email Request) */}
+            <Tilt3D maxTilt={7} glare={true} className="rounded-2xl">
+              {data.resumeUrl ? (
+                <a
+                  href={data.resumeUrl}
+                  download
+                  className="flex items-center justify-between rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-sm font-medium text-(--color-text-primary) backdrop-blur-sm transition-all hover:border-(--color-border-hover) hover:bg-(--color-surface)"
+                >
+                  <div style={{ transform: "translateZ(18px)" }} className="flex items-center gap-2.5">
+                    <Download size={16} className="text-(--color-accent)" />
+                    <span>Download Curriculum Vitae</span>
+                  </div>
+                  <span style={{ transform: "translateZ(15px)" }} className="text-xs text-(--color-text-muted)">PDF</span>
+                </a>
+              ) : (
+                <a
+                  href={`mailto:${data.email}?subject=${encodeURIComponent("Curriculum Vitae Request — Mahesh Kumar Mahato")}`}
+                  className="group flex items-center justify-between rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-sm font-medium text-(--color-text-primary) backdrop-blur-sm transition-all hover:border-(--color-accent) hover:bg-(--color-surface)"
+                >
+                  <div style={{ transform: "translateZ(18px)" }} className="flex items-center gap-2.5">
+                    <Download size={16} className="text-(--color-accent) transition-transform group-hover:-translate-y-0.5" />
+                    <span>Curriculum Vitae</span>
+                  </div>
+                  <span style={{ transform: "translateZ(15px)" }} className="text-xs font-semibold text-(--color-accent) group-hover:underline">
+                    Request via Email →
+                  </span>
+                </a>
+              )}
+            </Tilt3D>
 
             {/* Social Links */}
             <div>

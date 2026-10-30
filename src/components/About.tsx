@@ -3,6 +3,7 @@ import { Calendar, User, Sparkles, Gauge, Layers, ShieldCheck } from "lucide-rea
 import type { PortfolioConfig } from "@/types";
 import { prefersReducedMotion } from "@/lib/utils";
 import SectionHeading from "@/components/SectionHeading";
+import Tilt3D from "@/components/Tilt3D";
 
 interface AboutProps {
   data: PortfolioConfig;
@@ -90,24 +91,27 @@ export default function About({ data }: AboutProps) {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.2 }}
                       transition={{ delay: 0.1 + i * 0.08, duration: 0.55 }}
-                      className="group rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 backdrop-blur-sm transition-colors hover:border-(--color-border-hover) hover:bg-(--color-surface)"
                     >
-                      <div className="flex items-center gap-2 text-(--color-accent)">
-                        <Icon size={16} className="transition-transform group-hover:scale-110" />
-                        <span className="text-xs font-semibold text-(--color-text-primary)">
-                          {area.title}
-                        </span>
-                      </div>
-                      <p className="mt-1.5 text-xs leading-relaxed text-(--color-text-muted) group-hover:text-(--color-text-secondary)">
-                        {area.desc}
-                      </p>
+                      <Tilt3D maxTilt={8} glare={true} className="rounded-2xl h-full">
+                        <div className="group h-full rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 backdrop-blur-sm transition-colors hover:border-(--color-border-hover) hover:bg-(--color-surface)">
+                          <div style={{ transform: "translateZ(20px)" }} className="flex items-center gap-2 text-(--color-accent)">
+                            <Icon size={16} className="transition-transform group-hover:scale-110" />
+                            <span className="text-xs font-semibold text-(--color-text-primary)">
+                              {area.title}
+                            </span>
+                          </div>
+                          <p style={{ transform: "translateZ(15px)" }} className="mt-1.5 text-xs leading-relaxed text-(--color-text-muted) group-hover:text-(--color-text-secondary)">
+                            {area.desc}
+                          </p>
+                        </div>
+                      </Tilt3D>
                     </motion.div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Stats Cards */}
+            {/* 3D Interactive Stats Cards */}
             <div className="grid grid-cols-3 gap-4 pt-2">
               {data.stats.map((stat, i) => (
                 <motion.div
@@ -116,17 +120,20 @@ export default function About({ data }: AboutProps) {
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: 0.15 + i * 0.1, duration: 0.55 }}
-                  className="rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-center backdrop-blur-sm transition-colors hover:border-(--color-border-hover)"
                 >
-                  <div className="text-2xl font-bold text-(--color-text-primary) sm:text-3xl">
-                    {stat.value}
-                    {stat.suffix && (
-                      <span className="gradient-text">{stat.suffix}</span>
-                    )}
-                  </div>
-                  <div className="mt-1 text-xs text-(--color-text-muted) sm:text-sm">
-                    {stat.label}
-                  </div>
+                  <Tilt3D maxTilt={10} glare={true} className="rounded-2xl h-full">
+                    <div className="h-full rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-center backdrop-blur-sm transition-colors hover:border-(--color-border-hover) hover:bg-(--color-surface)">
+                      <div style={{ transform: "translateZ(25px)" }} className="text-2xl font-bold text-(--color-text-primary) sm:text-3xl">
+                        {stat.value}
+                        {stat.suffix && (
+                          <span className="gradient-text">{stat.suffix}</span>
+                        )}
+                      </div>
+                      <div style={{ transform: "translateZ(15px)" }} className="mt-1 text-xs text-(--color-text-muted) sm:text-sm">
+                        {stat.label}
+                      </div>
+                    </div>
+                  </Tilt3D>
                 </motion.div>
               ))}
             </div>
