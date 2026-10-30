@@ -195,15 +195,15 @@ const portfolio: PortfolioConfig = {
       id: "project-3",
       title: "Portfolio Website",
       description:
-        "A premium, Apple-inspired personal portfolio built with React, TypeScript, and modern animation libraries.",
+        "A modern, high-performance personal portfolio built with React, TypeScript, and fluid 3D motion systems.",
       longDescription:
-        "This portfolio website features smooth scroll-linked animations, a dark theme with glassmorphism accents, interactive skill cards, project filtering, and a fully responsive layout inspired by Apple's design language.",
+        "This portfolio website features smooth scroll-linked animations, a dark theme with glassmorphism accents, interactive 3D skill cards, project filtering, and a fluid, responsive layout with rich micro-interactions.",
       category: "Frontend",
       technologies: [
         "React",
         "TypeScript",
         "Tailwind CSS",
-        "Framer Motion",
+        "Motion",
       ],
       demoUrl: undefined,
       repoUrl: undefined,

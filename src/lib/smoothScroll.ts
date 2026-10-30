@@ -1,7 +1,7 @@
 /**
- * Ultra-smooth Apple-grade scroll engine.
+ * Ultra-smooth high-performance scroll engine.
  * Implements a high-refresh-rate (60Hz / 120Hz ProMotion) requestAnimationFrame interpolation
- * with dynamic distance-based timing and Apple-inspired quintic ease-out deceleration curve.
+ * with dynamic distance-based timing and fluid quintic ease-out deceleration curve.
  */
 
 export interface SmoothScrollOptions {

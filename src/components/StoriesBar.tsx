@@ -68,14 +68,14 @@ const storiesData: Story[] = [
     actionHref: "#projects",
   },
   {
-    id: "apple",
+    id: "craft",
     name: "Philosophy",
     tagline: "Aesthetic",
     badge: "Story • 4 of 5",
-    title: "Apple-Grade Precision",
+    title: "Design & Precision",
     subtitle: "Minimalism & Craft",
     paragraphs: [
-      "Inspired by the world's finest design language: deep obsidian blacks, subtle glass surfaces, and tactile spring haptics.",
+      "Inspired by the world's finest modern design systems: deep obsidian blacks, subtle glass surfaces, and tactile spring dynamics.",
       "Details are not just details; they make the product.",
     ],
     gradient: "from-pink-500 via-rose-500 to-yellow-500",

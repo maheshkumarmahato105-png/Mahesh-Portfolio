@@ -13,7 +13,7 @@ interface Tilt3DProps {
 }
 
 /**
- * Apple-grade 3D Interactive Tilt & Depth Glare Container.
+ * High-performance 3D Interactive Tilt & Depth Glare Container.
  * Gives child elements real 3D spatial depth, spring physics, and dynamic specular sheen.
  */
 export default function Tilt3D({
@@ -33,7 +33,7 @@ export default function Tilt3D({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Apple-tuned fluid spring configuration
+  // Fluid spring configuration
   const springConfig = { stiffness: 280, damping: 22, mass: 0.5 };
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [maxTilt, -maxTilt]), springConfig);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-maxTilt, maxTilt]), springConfig);
@@ -107,3 +107,4 @@ export default function Tilt3D({
     </motion.div>
   );
 }
+

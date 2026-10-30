@@ -12,7 +12,7 @@ interface MagneticButtonProps {
 }
 
 /**
- * Apple visionOS / tvOS inspired Magnetic 3D Button.
+ * Magnetic 3D Cursor Attraction Button.
  * Subtly attracts towards cursor on hover and springs back elastically.
  */
 export default function MagneticButton({
@@ -87,3 +87,4 @@ export default function MagneticButton({
     </motion.button>
   );
 }
+

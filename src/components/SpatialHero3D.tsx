@@ -1,6 +1,6 @@
 import { useRef, useState, type MouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { Sparkles, Terminal, Code2, Zap, CheckCircle2 } from "lucide-react";
+import { Sparkles, Terminal, Code2, Zap, CheckCircle2, Rocket } from "lucide-react";
 import { prefersReducedMotion } from "@/lib/utils";
 
 interface SpatialHero3DProps {
@@ -11,12 +11,13 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
   const reduced = prefersReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isRunningDemo, setIsRunningDemo] = useState(false);
 
   // Mouse coordinate values normalized from -0.5 to +0.5
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Apple-grade fluid spring interpolation
+  // Precision fluid spring interpolation
   const springConfig = { stiffness: 240, damping: 20, mass: 0.6 };
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [14, -14]), springConfig);
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-14, 14]), springConfig);
@@ -49,6 +50,13 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
     setIsHovered(false);
     mouseX.set(0);
     mouseY.set(0);
+  };
+
+  const handleRunDemo = (e: MouseEvent) => {
+    e.stopPropagation();
+    setIsRunningDemo(true);
+    onExplore?.();
+    setTimeout(() => setIsRunningDemo(false), 2400);
   };
 
   return (
@@ -90,16 +98,44 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
         }
         className="relative w-full max-w-[440px] cursor-pointer will-change-transform sm:max-w-[480px]"
       >
-        {/* Layer 0: Ambient Chromatic Depth Halo */}
+        {/* Layer 0: 3D Holographic Concentric Orbit Rings */}
         <div
-          style={{ transform: "translateZ(-30px)" }}
-          className="pointer-events-none absolute -inset-6 rounded-[40px] bg-linear-to-tr from-indigo-500/20 via-purple-500/15 to-rose-500/20 blur-2xl transition-opacity duration-500"
-        />
+          style={{ transform: "translateZ(-40px)" }}
+          className="pointer-events-none absolute -inset-10 flex items-center justify-center opacity-70"
+        >
+          {/* Ring 1 - Cyan Cyber Orbit */}
+          <motion.div
+            animate={{ rotateZ: 360 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            style={{ transform: "rotateX(68deg)" }}
+            className="absolute h-96 w-96 rounded-full border border-cyan-400/25 border-dashed"
+          />
+          {/* Ring 2 - Violet Matrix Orbit */}
+          <motion.div
+            animate={{ rotateZ: -360 }}
+            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+            style={{ transform: "rotateY(65deg)" }}
+            className="absolute h-[420px] w-[420px] rounded-full border border-purple-400/20"
+          />
+          {/* Ring 3 - Rose Particle Beacon */}
+          <motion.div
+            animate={{ rotateZ: 360 }}
+            transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+            style={{ transform: "rotateX(45deg) rotateY(45deg)" }}
+            className="absolute h-[380px] w-[380px] rounded-full border border-rose-400/20 border-dotted"
+          />
+          {/* Central Chromatic Energy Halo */}
+          <div className="absolute h-64 w-64 rounded-full bg-linear-to-tr from-indigo-500/25 via-purple-500/20 to-rose-500/25 blur-3xl" />
+        </div>
 
-        {/* Layer 1: Apple Vision Frosted Glass Code Terminal Window */}
+        {/* Layer 1: Frosted Glass Spatial Code Terminal Window */}
         <div
           style={{ transform: "translateZ(30px)" }}
-          className="relative overflow-hidden rounded-3xl border border-white/20 bg-(--color-bg-glass)/90 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-colors hover:border-white/30"
+          className={`relative overflow-hidden rounded-3xl border bg-(--color-bg-glass)/90 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all duration-300 ${
+            isRunningDemo
+              ? "border-emerald-400/80 shadow-[0_0_35px_rgba(16,185,129,0.35)]"
+              : "border-white/20 hover:border-white/30"
+          }`}
         >
           {/* Window Title Bar */}
           <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3">
@@ -126,7 +162,7 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
               <span className="text-purple-400">import</span>
               <span className="text-white">{"{ Experience }"}</span>
               <span className="text-purple-400">from</span>
-              <span className="text-emerald-400">"@portfolio/apple-ux"</span>;
+              <span className="text-emerald-400">"@portfolio/interactive"</span>;
             </div>
 
             <div className="mt-3 text-(--color-text-secondary)">
@@ -165,17 +201,29 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
             <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/30 p-2.5 text-[11px]">
               <div className="flex items-center gap-2 text-emerald-400">
                 <Terminal size={14} />
-                <span className="font-semibold">Ready for production</span>
+                <span className="font-semibold">
+                  {isRunningDemo ? "🚀 Launching interactive showcase..." : "Ready for production"}
+                </span>
               </div>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onExplore?.();
-                }}
-                className="flex items-center gap-1.5 rounded-lg bg-white/10 px-2.5 py-1 text-[11px] font-sans font-medium text-white transition-all hover:bg-white/20 active:scale-95"
+                onClick={handleRunDemo}
+                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-sans font-medium text-white transition-all active:scale-95 ${
+                  isRunningDemo
+                    ? "bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
               >
-                <span>Run Demo</span>
-                <Zap size={11} className="text-amber-400" />
+                {isRunningDemo ? (
+                  <>
+                    <span>Running</span>
+                    <Rocket size={11} className="animate-bounce text-white" />
+                  </>
+                ) : (
+                  <>
+                    <span>Run Demo</span>
+                    <Zap size={11} className="text-amber-400" />
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -212,7 +260,7 @@ export default function SpatialHero3D({ onExplore }: SpatialHero3DProps) {
             <Sparkles size={13} />
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-[11px] font-bold text-white">Apple 3D Motion</span>
+            <span className="text-[11px] font-bold text-white">Spatial 3D Motion</span>
             <span className="text-[9px] text-emerald-400 flex items-center gap-1">
               <CheckCircle2 size={10} /> 60/120 FPS Fluid
             </span>

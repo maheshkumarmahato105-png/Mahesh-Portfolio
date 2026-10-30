@@ -186,7 +186,7 @@ export default function About({ data }: AboutProps) {
               </div>
             </div>
 
-            {/* Apple-style minimalist quote / dedication banner */}
+            {/* Minimalist craftsmanship quote banner */}
             <motion.div
               initial={{ opacity: 0, y: reduced ? 0 : 25 }}
               whileInView={{ opacity: 1, y: 0 }}

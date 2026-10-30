@@ -166,7 +166,7 @@ export default function Hero({ data }: HeroProps) {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Apple Spatial 3D Interactive Stage (col-span-5) */}
+          {/* Right Column: Spatial 3D Interactive Centerpiece (col-span-5) */}
           <motion.div
             initial={{ opacity: 0, scale: reduced ? 1 : 0.9, y: reduced ? 0 : 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

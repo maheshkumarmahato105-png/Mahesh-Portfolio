@@ -184,7 +184,7 @@ export default function Navbar({
             </div>
           </motion.button>
 
-          {/* Desktop Navigation Links — Apple Dynamic Island Capsule */}
+          {/* Desktop Navigation Links — Dynamic Island Capsule */}
           <div
             ref={navRef}
             onMouseMove={handleMouseMove}
