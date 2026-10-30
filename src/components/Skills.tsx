@@ -1,0 +1,148 @@
+import { useState, useRef, type ReactNode } from "react";
+import { motion, useInView, AnimatePresence } from "motion/react";
+import {
+  Code2,
+  Palette,
+  FileCode2,
+  Atom,
+  ShieldCheck,
+  Wind,
+  GitBranch,
+  Smartphone,
+  Eye,
+  Zap,
+} from "lucide-react";
+import type { Skill } from "@/types";
+import { prefersReducedMotion } from "@/lib/utils";
+import SectionHeading from "@/components/SectionHeading";
+
+const iconMap: Record<string, ReactNode> = {
+  "code-2": <Code2 size={24} />,
+  palette: <Palette size={24} />,
+  "file-code-2": <FileCode2 size={24} />,
+  atom: <Atom size={24} />,
+  "shield-check": <ShieldCheck size={24} />,
+  wind: <Wind size={24} />,
+  "git-branch": <GitBranch size={24} />,
+  smartphone: <Smartphone size={24} />,
+  eye: <Eye size={24} />,
+  zap: <Zap size={24} />,
+};
+
+interface SkillsProps {
+  skills: Skill[];
+}
+
+export default function Skills({ skills }: SkillsProps) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const reduced = prefersReducedMotion();
+
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+
+  // Group by category and include "All"
+  const categories = ["All", ...new Set(skills.map((s) => s.category))];
+
+  const filteredSkills =
+    activeCategory === "All"
+      ? skills
+      : skills.filter((s) => s.category === activeCategory);
+
+  return (
+    <section
+      id="skills"
+      ref={ref}
+      className="relative px-6 py-24 sm:py-32 lg:py-40"
+    >
+      {/* Background accent */}
+      <div className="pointer-events-none absolute right-0 top-1/3 h-100 w-100 translate-x-1/3 rounded-full bg-linear-to-l from-purple-500/5 to-transparent blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <SectionHeading
+          label="Skills"
+          title="Technologies I work with"
+          description="A specialized toolkit focused on modern frontend engineering, performance, and responsive interfaces."
+          inView={inView}
+        />
+
+        {/* Category filter pills */}
+        <motion.div
+          initial={{ opacity: 0, y: reduced ? 0 : 15 }}
+          animate={inView ? { opacity: 1, y: 0 } : undefined}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="mt-10 flex flex-wrap justify-center gap-2"
+          role="tablist"
+          aria-label="Filter skills by category"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              role="tab"
+              aria-selected={activeCategory === cat}
+              className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+                activeCategory === cat
+                  ? "bg-(--color-accent) text-white shadow-(--color-accent-glow)"
+                  : "border border-(--color-border) text-(--color-text-muted) hover:border-(--color-border-hover) hover:text-(--color-text-primary)"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Skills Grid */}
+        <div
+          className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+          role="tabpanel"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, y: reduced ? 0 : 25, scale: reduced ? 1 : 0.95 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : undefined}
+                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                transition={{
+                  delay: reduced ? 0 : 0.05 * i,
+                  duration: 0.45,
+                  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+                }}
+                whileHover={reduced ? {} : { y: -5, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative flex flex-col justify-between cursor-default rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-5 backdrop-blur-sm transition-colors hover:border-(--color-border-hover) hover:bg-(--color-surface)"
+                tabIndex={0}
+                role="article"
+                aria-label={`${skill.name} — ${skill.description}`}
+              >
+                {/* Glow on hover */}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-(--color-accent-glow) to-transparent" />
+                </div>
+
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <div className="text-(--color-accent) transition-colors group-hover:text-(--color-accent-hover)">
+                      {iconMap[skill.icon] ?? <Code2 size={24} />}
+                    </div>
+                    <span className="rounded-full bg-white/4 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-(--color-text-muted)">
+                      {skill.category}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-4 text-sm font-semibold text-(--color-text-primary)">
+                    {skill.name}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-(--color-text-muted) transition-colors group-hover:text-(--color-text-secondary)">
+                    {skill.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+    </section>
+  );
+}

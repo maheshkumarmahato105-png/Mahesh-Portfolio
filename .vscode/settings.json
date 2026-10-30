@@ -1,0 +1,8 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "css.lint.vendorPrefix": "ignore",
+  "css.lint.compatibleVendorPrefixes": "ignore",
+  "css.validate": true,
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+  "tailwindCSS.lint.cssConflict": "warning"
+}
