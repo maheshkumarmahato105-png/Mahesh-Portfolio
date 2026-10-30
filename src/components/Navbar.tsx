@@ -190,15 +190,34 @@ export default function Navbar({
             onMouseLeave={handleMouseLeave}
             className="relative hidden items-center gap-1 rounded-full border border-(--color-border) bg-(--color-bg-glass) p-1.5 backdrop-blur-2xl transition-colors md:flex shadow-xs"
           >
-            {/* Interactive cursor spotlight glow */}
-            {mousePos && (
+            {/* Interactive cursor spotlight glow & dynamic specular border rim */}
+            <div
+              className="pointer-events-none absolute -inset-px rounded-full overflow-hidden transition-opacity duration-300"
+              style={{ opacity: mousePos ? 1 : 0 }}
+            >
+              {/* Dual-tone glowing flashlight beam that follows cursor */}
               <div
-                className="pointer-events-none absolute -inset-px rounded-full transition-opacity duration-200"
+                className="absolute inset-0"
                 style={{
-                  background: `radial-gradient(110px circle at ${mousePos.x}px ${mousePos.y}px, var(--color-accent-glow), transparent 75%)`,
+                  background: mousePos
+                    ? `radial-gradient(130px circle at ${mousePos.x}px ${mousePos.y}px, rgba(99, 102, 241, 0.32), rgba(244, 63, 94, 0.18), transparent 70%)`
+                    : "none",
                 }}
               />
-            )}
+              {/* High-precision specular border rim glow */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  padding: "1px",
+                  background: mousePos
+                    ? `radial-gradient(90px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.45), transparent 70%)`
+                    : "none",
+                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                }}
+              />
+            </div>
 
             {links.map((link) => {
               const sectionId = link.href.replace("#", "");
@@ -206,16 +225,20 @@ export default function Navbar({
               const isHovered = hoveredSection === sectionId;
 
               return (
-                <button
+                <motion.button
                   key={link.href}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={(e) => {
                     triggerParticle(e);
                     scrollToSection(link.href);
                   }}
                   onMouseEnter={() => setHoveredSection(sectionId)}
                   className={cn(
-                    "group relative z-10 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 select-none",
+                    "group relative z-10 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 select-none cursor-pointer",
                     isActive
+                      ? "text-(--color-text-primary)"
+                      : isHovered
                       ? "text-(--color-text-primary)"
                       : "text-(--color-text-secondary) hover:text-(--color-text-primary)"
                   )}
@@ -225,7 +248,7 @@ export default function Navbar({
                   {isActive && (
                     <motion.span
                       layoutId="active-nav"
-                      className="absolute inset-0 rounded-full bg-(--color-surface) shadow-sm"
+                      className="absolute inset-0 rounded-full bg-white/12 dark:bg-white/16 border border-white/20 dark:border-white/25 shadow-[0_2px_12px_rgba(0,0,0,0.25)] backdrop-blur-md"
                       transition={{
                         type: "spring",
                         stiffness: 420,
@@ -238,7 +261,7 @@ export default function Navbar({
                   {isHovered && !isActive && (
                     <motion.span
                       layoutId="hover-nav"
-                      className="absolute inset-0 rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-xs"
+                      className="absolute inset-0 rounded-full bg-white/10 dark:bg-white/10 border border-white/15 dark:border-white/20 shadow-xs backdrop-blur-xs"
                       transition={{
                         type: "spring",
                         stiffness: 450,
@@ -253,33 +276,34 @@ export default function Navbar({
                       isActive
                         ? { scale: [1, 0.82, 1.25, 0.96, 1], y: [0, 1, -2, 0] }
                         : isHovered
-                        ? { scale: 1.18, y: -1.5 }
+                        ? { scale: 1.25, y: -2 }
                         : { scale: 1, y: 0 }
                     }
                     transition={{
                       type: "spring",
-                      stiffness: 500,
-                      damping: 15,
-                      mass: 0.8,
+                      stiffness: 480,
+                      damping: 18,
                     }}
                     className={cn(
                       "relative z-10 flex items-center justify-center transition-colors duration-200",
                       isActive
-                        ? "text-(--color-accent)"
-                        : "text-(--color-text-muted) group-hover:text-(--color-text-primary)"
+                        ? "text-(--color-accent) drop-shadow-[0_0_8px_rgba(129,140,248,0.7)]"
+                        : isHovered
+                        ? "text-rose-500 dark:text-rose-400 drop-shadow-[0_0_6px_rgba(244,63,94,0.6)]"
+                        : "text-(--color-text-muted)"
                     )}
                   >
                     {navIcons[sectionId] ?? <Sparkles size={16} />}
                   </motion.span>
 
                   {/* Text Label */}
-                  <span className="relative z-10">{link.label}</span>
+                  <span className="relative z-10 transition-colors duration-200">{link.label}</span>
 
                   {/* Instagram Story Gradient Active Pip */}
                   {isActive && (
                     <motion.span
                       layoutId="instagram-active-dot"
-                      className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_8px_rgba(236,72,153,0.8)]"
+                      className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_8px_rgba(236,72,153,0.9)]"
                       transition={{
                         type: "spring",
                         stiffness: 500,
@@ -287,7 +311,7 @@ export default function Navbar({
                       }}
                     />
                   )}
-                </button>
+                </motion.button>
               );
             })}
           </div>
@@ -299,7 +323,7 @@ export default function Navbar({
               onClick={toggleTheme}
               whileHover={{ scale: 1.1, rotate: 18 }}
               whileTap={{ scale: 0.88 }}
-              className="rounded-full p-2.5 text-(--color-text-secondary) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary)"
+              className="rounded-full p-2.5 text-(--color-text-secondary) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary) cursor-pointer"
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -324,7 +348,7 @@ export default function Navbar({
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.94 }}
-              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover)"
+              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover) cursor-pointer"
             >
               <Mail size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               <span>Let's Talk</span>
@@ -356,27 +380,27 @@ export default function Navbar({
       </motion.header>
 
       {/* Mobile Instagram-Style Floating Bottom Navigation Bar (iPhone Style) */}
-      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none">
-        <div className="pointer-events-auto flex w-full items-center justify-between rounded-full border border-(--color-border) bg-(--color-bg-glass)/95 p-1.5 shadow-2xl backdrop-blur-2xl">
+      <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none">
+        <div className="pointer-events-auto grid grid-cols-5 w-full items-center rounded-full border border-(--color-border) bg-(--color-bg-glass)/95 p-1.5 shadow-2xl backdrop-blur-2xl">
           {links.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId;
             return (
               <motion.button
                 key={link.href}
-                whileTap={{ scale: 0.85 }}
+                whileTap={{ scale: 0.82 }}
                 onClick={(e) => {
                   triggerParticle(e);
                   scrollToSection(link.href);
                 }}
-                className="relative flex flex-1 flex-col items-center justify-center py-2 px-1 transition-colors"
+                className="relative flex flex-col items-center justify-center py-2 transition-colors cursor-pointer"
                 aria-label={link.label}
               >
                 {/* Active Pill on Mobile */}
                 {isActive && (
                   <motion.span
                     layoutId="mobile-active-nav"
-                    className="absolute inset-0 rounded-full bg-(--color-surface) shadow-xs"
+                    className="absolute inset-0 rounded-full bg-white/12 dark:bg-white/16 border border-white/20 shadow-xs"
                     transition={{
                       type: "spring",
                       stiffness: 420,
@@ -399,7 +423,9 @@ export default function Navbar({
                   }}
                   className={cn(
                     "relative z-10 transition-colors",
-                    isActive ? "text-(--color-accent)" : "text-(--color-text-muted)"
+                    isActive
+                      ? "text-(--color-accent) drop-shadow-[0_0_8px_rgba(129,140,248,0.7)]"
+                      : "text-(--color-text-muted)"
                   )}
                 >
                   {navIcons[sectionId] ?? <Sparkles size={17} />}

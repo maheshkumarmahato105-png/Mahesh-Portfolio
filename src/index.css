@@ -43,7 +43,7 @@
 
 /* ─── Base ─── */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-padding-top: 5rem;
   overflow-x: hidden;
   max-width: 100vw;

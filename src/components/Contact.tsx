@@ -181,7 +181,7 @@ export default function Contact({ data }: ContactProps) {
               </div>
             </div>
 
-            {/* Resume Download (if configured) */}
+            {/* Resume Download (or Direct Email Request) */}
             {data.resumeUrl ? (
               <a
                 href={data.resumeUrl}
@@ -195,10 +195,18 @@ export default function Contact({ data }: ContactProps) {
                 <span className="text-xs text-(--color-text-muted)">PDF</span>
               </a>
             ) : (
-              <div className="rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-xs text-(--color-text-muted) backdrop-blur-sm">
-                <p className="font-medium text-(--color-text-secondary)">Resume / CV</p>
-                <p className="mt-1">Available upon request via email, or add <code className="rounded bg-black/20 px-1 py-0.5">resume.pdf</code> to <code className="rounded bg-black/20 px-1 py-0.5">public/</code> to enable direct download.</p>
-              </div>
+              <a
+                href={`mailto:${data.email}?subject=${encodeURIComponent("Curriculum Vitae Request — Mahesh Kumar Mahato")}`}
+                className="group flex items-center justify-between rounded-2xl border border-(--color-border) bg-(--color-bg-glass) p-4 text-sm font-medium text-(--color-text-primary) backdrop-blur-sm transition-all hover:border-(--color-accent) hover:bg-(--color-surface)"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Download size={16} className="text-(--color-accent) transition-transform group-hover:-translate-y-0.5" />
+                  <span>Curriculum Vitae</span>
+                </div>
+                <span className="text-xs font-semibold text-(--color-accent) group-hover:underline">
+                  Request via Email →
+                </span>
+              </a>
             )}
 
             {/* Social Links */}
