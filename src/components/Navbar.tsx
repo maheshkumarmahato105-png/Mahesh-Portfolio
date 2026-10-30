@@ -1,6 +1,19 @@
-import { useState, useEffect, useCallback, useRef, type MouseEvent } from "react";
+import { useState, useEffect, useCallback, useRef, type MouseEvent, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Sun, Moon, Mail } from "lucide-react";
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Mail,
+  Home,
+  User,
+  Code2,
+  Briefcase,
+  Send,
+  Heart,
+  Sparkles,
+} from "lucide-react";
 import type { NavLink } from "@/types";
 import { cn, getHeaderOffset } from "@/lib/utils";
 import { smoothScrollTo } from "@/lib/smoothScroll";
@@ -13,6 +26,20 @@ interface NavbarProps {
   toggleTheme: () => void;
 }
 
+interface BurstParticle {
+  id: number;
+  x: number;
+  y: number;
+}
+
+const navIcons: Record<string, ReactNode> = {
+  home: <Home size={17} strokeWidth={2.2} />,
+  about: <User size={17} strokeWidth={2.2} />,
+  skills: <Code2 size={17} strokeWidth={2.2} />,
+  projects: <Briefcase size={17} strokeWidth={2.2} />,
+  contact: <Send size={16} strokeWidth={2.2} />,
+};
+
 export default function Navbar({
   links,
   activeSection,
@@ -24,6 +51,7 @@ export default function Navbar({
   const [scrolled, setScrolled] = useState(false);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const [particles, setParticles] = useState<BurstParticle[]>([]);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,6 +77,19 @@ export default function Navbar({
       document.body.classList.remove("menu-open");
     };
   }, [isOpen]);
+
+  const triggerParticle = (e: MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const newParticle: BurstParticle = {
+      id: Date.now() + Math.random(),
+      x: rect.left + rect.width / 2,
+      y: rect.top,
+    };
+    setParticles((prev) => [...prev.slice(-4), newParticle]);
+    setTimeout(() => {
+      setParticles((prev) => prev.filter((p) => p.id !== newParticle.id));
+    }, 700);
+  };
 
   const scrollToSection = useCallback(
     (href: string) => {
@@ -78,6 +119,29 @@ export default function Navbar({
 
   return (
     <>
+      {/* Floating Instagram-Style Burst Particles on Tap */}
+      <AnimatePresence>
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            initial={{ opacity: 1, scale: 0.4, y: 0, x: 0 }}
+            animate={{
+              opacity: 0,
+              scale: [0.5, 1.35, 0.8],
+              y: -38,
+              x: (Math.random() - 0.5) * 24,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className="pointer-events-none fixed z-60 text-rose-500 drop-shadow-[0_0_8px_rgba(244,63,94,0.7)]"
+            style={{ left: p.x - 8, top: p.y - 12 }}
+          >
+            <Heart size={16} fill="currentColor" />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* Main Top Header */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -85,7 +149,7 @@ export default function Navbar({
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "glass shadow-md py-3"
+            ? "glass shadow-md py-2.5 sm:py-3"
             : "bg-transparent py-4 sm:py-5"
         )}
       >
@@ -93,26 +157,38 @@ export default function Navbar({
           className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8"
           aria-label="Main navigation"
         >
-          {/* Logo Monogram */}
+          {/* Logo Monogram with Instagram Story Gradient Ring */}
           <motion.button
-            onClick={() => scrollToSection("#home")}
+            onClick={(e) => {
+              triggerParticle(e);
+              scrollToSection("#home");
+            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative flex items-center gap-1.5 text-xl font-black tracking-tight"
+            className="group relative flex items-center gap-2.5 text-xl font-black tracking-tight"
             aria-label="Mahesh Kumar Mahato — Return to top"
           >
-            <span className="gradient-text transition-transform duration-300">M.</span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-(--color-text-muted) transition-colors duration-300 group-hover:text-(--color-text-primary)">
-              Dev
-            </span>
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-tr from-amber-500 via-rose-500 to-purple-600 p-[2px] shadow-sm transition-transform duration-300 group-hover:scale-105">
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-(--color-bg) font-black text-sm tracking-tight text-(--color-text-primary) transition-colors">
+                M
+              </div>
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-sm font-bold tracking-tight text-(--color-text-primary)">
+                Mahesh
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-(--color-text-muted) transition-colors group-hover:text-rose-500">
+                Portfolio
+              </span>
+            </div>
           </motion.button>
 
-          {/* Desktop Navigation Links — Apple Mouse-Interactive Glass Pill */}
+          {/* Desktop Navigation Links — Apple Dynamic Island Capsule */}
           <div
             ref={navRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative hidden items-center gap-1 rounded-full border border-(--color-border) bg-(--color-bg-glass) p-1 backdrop-blur-xl transition-colors md:flex shadow-xs"
+            className="relative hidden items-center gap-1 rounded-full border border-(--color-border) bg-(--color-bg-glass) p-1.5 backdrop-blur-2xl transition-colors md:flex shadow-xs"
           >
             {/* Interactive cursor spotlight glow */}
             {mousePos && (
@@ -132,10 +208,13 @@ export default function Navbar({
               return (
                 <button
                   key={link.href}
-                  onClick={() => scrollToSection(link.href)}
+                  onClick={(e) => {
+                    triggerParticle(e);
+                    scrollToSection(link.href);
+                  }}
                   onMouseEnter={() => setHoveredSection(sectionId)}
                   className={cn(
-                    "relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200",
+                    "group relative z-10 flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide transition-all duration-200 select-none",
                     isActive
                       ? "text-(--color-text-primary)"
                       : "text-(--color-text-secondary) hover:text-(--color-text-primary)"
@@ -168,7 +247,46 @@ export default function Navbar({
                     />
                   )}
 
-                  <span className="relative z-10 select-none">{link.label}</span>
+                  {/* Instagram-Style Bouncy Spring Icon */}
+                  <motion.span
+                    animate={
+                      isActive
+                        ? { scale: [1, 0.82, 1.25, 0.96, 1], y: [0, 1, -2, 0] }
+                        : isHovered
+                        ? { scale: 1.18, y: -1.5 }
+                        : { scale: 1, y: 0 }
+                    }
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 15,
+                      mass: 0.8,
+                    }}
+                    className={cn(
+                      "relative z-10 flex items-center justify-center transition-colors duration-200",
+                      isActive
+                        ? "text-(--color-accent)"
+                        : "text-(--color-text-muted) group-hover:text-(--color-text-primary)"
+                    )}
+                  >
+                    {navIcons[sectionId] ?? <Sparkles size={16} />}
+                  </motion.span>
+
+                  {/* Text Label */}
+                  <span className="relative z-10">{link.label}</span>
+
+                  {/* Instagram Story Gradient Active Pip */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="instagram-active-dot"
+                      className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_8px_rgba(236,72,153,0.8)]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 25,
+                      }}
+                    />
+                  )}
                 </button>
               );
             })}
@@ -179,8 +297,8 @@ export default function Navbar({
             {/* Interactive Theme Toggle Button */}
             <motion.button
               onClick={toggleTheme}
-              whileHover={{ scale: 1.1, rotate: 15 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.1, rotate: 18 }}
+              whileTap={{ scale: 0.88 }}
               className="rounded-full p-2.5 text-(--color-text-secondary) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary)"
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
@@ -200,21 +318,24 @@ export default function Navbar({
 
             {/* Interactive Let's Talk CTA */}
             <motion.button
-              onClick={() => scrollToSection("#contact")}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-sm font-medium text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover)"
+              onClick={(e) => {
+                triggerParticle(e);
+                scrollToSection("#contact");
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.94 }}
+              className="group relative flex items-center gap-2 overflow-hidden rounded-full bg-(--color-accent) px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover)"
             >
               <Mail size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               <span>Let's Talk</span>
             </motion.button>
           </div>
 
-          {/* Mobile Menu Controls */}
+          {/* Mobile Top Controls */}
           <div className="flex items-center gap-2 md:hidden">
             <motion.button
               onClick={toggleTheme}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.88 }}
               className="rounded-full p-2 text-(--color-text-secondary) transition-colors hover:bg-(--color-surface) hover:text-(--color-text-primary)"
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
@@ -223,7 +344,7 @@ export default function Navbar({
 
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
-              whileTap={{ scale: 0.92 }}
+              whileTap={{ scale: 0.9 }}
               className="rounded-xl border border-(--color-border) p-2 text-(--color-text-primary) transition-colors hover:bg-(--color-surface)"
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
@@ -234,7 +355,75 @@ export default function Navbar({
         </nav>
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Instagram-Style Floating Bottom Navigation Bar (iPhone Style) */}
+      <div className="fixed bottom-4 inset-x-4 z-40 md:hidden pointer-events-none">
+        <div className="pointer-events-auto mx-auto flex max-w-sm items-center justify-around rounded-full border border-(--color-border) bg-(--color-bg-glass)/90 p-2 shadow-2xl backdrop-blur-2xl">
+          {links.map((link) => {
+            const sectionId = link.href.replace("#", "");
+            const isActive = activeSection === sectionId;
+            return (
+              <motion.button
+                key={link.href}
+                whileTap={{ scale: 0.85 }}
+                onClick={(e) => {
+                  triggerParticle(e);
+                  scrollToSection(link.href);
+                }}
+                className="relative flex flex-col items-center justify-center px-3.5 py-1.5 transition-colors"
+                aria-label={link.label}
+              >
+                {/* Active Pill on Mobile */}
+                {isActive && (
+                  <motion.span
+                    layoutId="mobile-active-nav"
+                    className="absolute inset-0 rounded-full bg-(--color-surface) shadow-xs"
+                    transition={{
+                      type: "spring",
+                      stiffness: 420,
+                      damping: 32,
+                    }}
+                  />
+                )}
+
+                {/* Bouncy Icon */}
+                <motion.div
+                  animate={
+                    isActive
+                      ? { scale: [1, 0.8, 1.3, 0.95, 1], y: [0, 2, -3, 0] }
+                      : { scale: 1, y: 0 }
+                  }
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 14,
+                  }}
+                  className={cn(
+                    "relative z-10 transition-colors",
+                    isActive ? "text-(--color-accent)" : "text-(--color-text-muted)"
+                  )}
+                >
+                  {navIcons[sectionId] ?? <Sparkles size={17} />}
+                </motion.div>
+
+                {/* Mobile Active Pip */}
+                {isActive && (
+                  <motion.span
+                    layoutId="mobile-instagram-dot"
+                    className="absolute -bottom-1 h-1 w-1 rounded-full bg-linear-to-r from-amber-500 via-rose-500 to-purple-600 shadow-[0_0_6px_rgba(236,72,153,0.8)]"
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 25,
+                    }}
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -266,16 +455,22 @@ export default function Navbar({
                   return (
                     <motion.button
                       key={link.href}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => scrollToSection(link.href)}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={(e) => {
+                        triggerParticle(e);
+                        scrollToSection(link.href);
+                      }}
                       className={cn(
-                        "rounded-2xl px-4 py-3.5 text-left text-base font-medium transition-colors",
+                        "flex items-center gap-3 rounded-2xl px-4 py-3.5 text-left text-base font-medium transition-colors",
                         isActive
                           ? "bg-(--color-accent)/15 text-(--color-accent) font-semibold"
                           : "text-(--color-text-secondary) hover:bg-(--color-surface) hover:text-(--color-text-primary)"
                       )}
                     >
-                      {link.label}
+                      <span className={isActive ? "text-(--color-accent)" : "text-(--color-text-muted)"}>
+                        {navIcons[sectionId]}
+                      </span>
+                      <span>{link.label}</span>
                     </motion.button>
                   );
                 })}
@@ -297,7 +492,10 @@ export default function Navbar({
 
                 <motion.button
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => scrollToSection("#contact")}
+                  onClick={(e) => {
+                    triggerParticle(e);
+                    scrollToSection("#contact");
+                  }}
                   className="mt-3 flex items-center justify-center gap-2 rounded-2xl bg-(--color-accent) px-4 py-3.5 text-sm font-semibold text-white shadow-(--color-accent-glow) transition-all hover:bg-(--color-accent-hover)"
                 >
                   <Mail size={16} />
