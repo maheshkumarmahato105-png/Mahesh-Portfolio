@@ -19,7 +19,7 @@ export default function Footer({ data }: FooterProps) {
   };
 
   return (
-    <footer className="border-t border-(--color-border) bg-(--color-bg-secondary) px-6 py-12 transition-colors duration-300">
+    <footer className="border-t border-(--color-border) bg-(--color-bg-secondary) px-6 pt-12 pb-24 sm:pb-12 transition-colors duration-300">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           {/* Logo & Tagline */}

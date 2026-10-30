@@ -55,30 +55,33 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   return (
     <AnimatePresence>
       {project && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 flex items-end sm:items-center justify-center p-0 sm:p-4">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            className="absolute inset-0 bg-black/75 backdrop-blur-md"
             onClick={onClose}
             aria-hidden
           />
 
-          {/* Modal Content */}
+          {/* Modal / iOS Bottom Sheet Content */}
           <motion.div
             ref={contentRef}
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+            initial={{ opacity: 0, y: 60, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 60, scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
             role="dialog"
             aria-modal="true"
             aria-label={`Project details: ${project.title}`}
-            className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-(--color-border) bg-(--color-bg-elevated) shadow-2xl"
+            className="relative max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-t-[32px] sm:rounded-3xl border border-(--color-border) bg-(--color-bg-elevated) shadow-2xl"
           >
+            {/* iOS Bottom Sheet Drag Handle (Mobile Only) */}
+            <div className="mx-auto mt-2.5 mb-1 h-1 w-10 rounded-full bg-(--color-text-muted)/40 sm:hidden" />
+
             {/* Close Button */}
             <button
               onClick={onClose}

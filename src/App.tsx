@@ -3,6 +3,7 @@ import { useActiveSection } from "@/hooks/useActiveSection";
 import portfolio from "@/data/portfolio";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import StoriesBar from "@/components/StoriesBar";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -27,6 +28,7 @@ export default function App() {
       />
       <main>
         <Hero data={portfolio} />
+        <StoriesBar />
         <About data={portfolio} />
         <Skills skills={portfolio.skills} />
         <Projects projects={portfolio.projects} />
