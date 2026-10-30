@@ -9,7 +9,7 @@ import {
   Home,
   User,
   Code2,
-  Briefcase,
+  Grid3X3,
   Send,
   Sparkles,
 } from "lucide-react";
@@ -26,11 +26,11 @@ interface NavbarProps {
 }
 
 const navIcons: Record<string, ReactNode> = {
-  home: <Home size={17} strokeWidth={2} />,
-  about: <User size={17} strokeWidth={2} />,
-  skills: <Code2 size={17} strokeWidth={2} />,
-  projects: <Briefcase size={17} strokeWidth={2} />,
-  contact: <Send size={16} strokeWidth={2} />,
+  home: <Home size={18} strokeWidth={2} />,
+  about: <User size={18} strokeWidth={2} />,
+  skills: <Code2 size={18} strokeWidth={2} />,
+  projects: <Grid3X3 size={18} strokeWidth={2} />,
+  contact: <Send size={18} strokeWidth={2} />,
 };
 
 export default function Navbar({
@@ -43,6 +43,7 @@ export default function Navbar({
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  const [dynamicIslandExpanded, setDynamicIslandExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +56,10 @@ export default function Navbar({
   // Close on Escape & handle body scroll lock
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        setDynamicIslandExpanded(false);
+      }
     };
 
     if (isOpen) {
@@ -72,6 +76,7 @@ export default function Navbar({
   const scrollToSection = useCallback(
     (href: string) => {
       setIsOpen(false);
+      setDynamicIslandExpanded(false);
       const cleanId = href.replace("#", "").trim() || "home";
       setActiveSection?.(cleanId, 850);
       smoothScrollTo(href, {
@@ -83,13 +88,91 @@ export default function Navbar({
 
   return (
     <>
-      {/* Translucent Graphite Navigation Bar */}
+      {/* ─── Apple Dynamic Island on Mobile View ─── */}
+      <div className="fixed top-2.5 inset-x-0 mx-auto z-50 flex justify-center px-4 md:hidden pointer-events-none">
+        <motion.div
+          layout
+          onClick={() => setDynamicIslandExpanded(!dynamicIslandExpanded)}
+          className="pointer-events-auto cursor-pointer overflow-hidden rounded-full border border-white/20 bg-black/95 text-[#f5f5f7] shadow-2xl backdrop-blur-3xl transition-all"
+          animate={
+            dynamicIslandExpanded
+              ? { width: 310, height: 110, borderRadius: 28 }
+              : { width: "auto", height: 34, borderRadius: 9999 }
+          }
+          transition={{ type: "spring", stiffness: 420, damping: 30 }}
+        >
+          {!dynamicIslandExpanded ? (
+            /* Collapsed Dynamic Island Pill */
+            <div className="flex h-full items-center justify-between gap-3 px-3 text-[11px] font-medium">
+              <div className="flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2997ff] opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2997ff]" />
+                </span>
+                <span className="font-semibold text-white tracking-tight">mahesh.dev</span>
+              </div>
+              <div className="h-2.5 w-px bg-white/20" />
+              <span className="text-[#86868b] uppercase tracking-wider text-[9px]">{activeSection}</span>
+              <div className="flex items-center gap-1 text-[#2997ff]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#2997ff]" />
+              </div>
+            </div>
+          ) : (
+            /* Expanded Dynamic Island Widget */
+            <div className="flex h-full flex-col justify-between p-3.5 text-xs">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#161616] border border-[#2997ff]/40 text-xs font-bold text-[#2997ff]">
+                    M
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">Mahesh Kumar Mahato</div>
+                    <div className="text-[10px] text-[#86868b]">Web Developer • Active Now</div>
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDynamicIslandExpanded(false);
+                  }}
+                  className="rounded-full bg-white/10 p-1 text-white/70 hover:bg-white/20"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+              <div className="flex items-center justify-between gap-2 pt-1 border-t border-white/10">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDynamicIslandExpanded(false);
+                    scrollToSection("#contact");
+                  }}
+                  className="flex-1 rounded-full bg-[#2997ff] py-1.5 text-center text-[10px] font-semibold text-white shadow-xs cursor-pointer"
+                >
+                  Direct Message
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleTheme();
+                  }}
+                  className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-medium text-white hover:bg-white/20 cursor-pointer"
+                >
+                  {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+                </button>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </div>
+
+      {/* ─── Translucent Graphite Navigation Bar ─── */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
           scrolled
             ? "bg-[#0a0a0a]/80 backdrop-blur-2xl border-b border-[rgba(255,255,255,0.12)] py-3 shadow-xs"
             : "bg-transparent py-4 sm:py-5"
@@ -187,7 +270,7 @@ export default function Navbar({
                   {isActive && (
                     <motion.span
                       layoutId="active-dot"
-                      className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#2997ff]"
+                      className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#2997ff] shadow-[0_0_6px_#2997ff]"
                       transition={{
                         type: "spring",
                         stiffness: 500,
@@ -232,19 +315,11 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* Mobile Top Controls */}
+          {/* Mobile Top Controls (Menu button) */}
           <div className="flex items-center gap-2 md:hidden">
             <button
-              onClick={toggleTheme}
-              className="rounded-full p-2 text-[#a1a1a6] transition-colors hover:text-[#f5f5f7]"
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            >
-              {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
-            </button>
-
-            <button
               onClick={() => setIsOpen(!isOpen)}
-              className="rounded-xl border border-[rgba(255,255,255,0.12)] p-2 text-[#f5f5f7] transition-colors hover:bg-white/6"
+              className="rounded-xl border border-[rgba(255,255,255,0.12)] p-2 text-[#f5f5f7] transition-colors hover:bg-white/6 cursor-pointer"
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
             >
@@ -254,7 +329,7 @@ export default function Navbar({
         </nav>
       </motion.header>
 
-      {/* Mobile Floating Bottom Navigation Dock with Tactile Haptics */}
+      {/* ─── Mobile Floating Bottom Navigation Dock (iOS Instagram Tabs) ─── */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none">
         <div className="pointer-events-auto grid grid-cols-5 w-full items-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[rgba(24,24,27,0.92)] p-1.5 shadow-2xl backdrop-blur-2xl">
           {links.map((link) => {
@@ -263,7 +338,7 @@ export default function Navbar({
             return (
               <motion.button
                 key={link.href}
-                whileTap={{ scale: 0.86 }}
+                whileTap={{ scale: 0.84 }}
                 onClick={() => scrollToSection(link.href)}
                 className="relative flex flex-col items-center justify-center py-2 transition-all cursor-pointer select-none"
                 aria-label={link.label}
@@ -309,7 +384,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Drawer Menu Overlay */}
+      {/* ─── Mobile Drawer Menu Overlay ─── */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -343,7 +418,7 @@ export default function Navbar({
                       key={link.href}
                       onClick={() => scrollToSection(link.href)}
                       className={cn(
-                        "flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium transition-colors",
+                        "flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium transition-colors cursor-pointer",
                         isActive
                           ? "bg-white/8 text-[#2997ff] font-semibold"
                           : "text-[#a1a1a6] hover:bg-white/4 hover:text-[#f5f5f7]"
@@ -363,7 +438,7 @@ export default function Navbar({
                   <span className="text-xs text-[#86868b]">Theme</span>
                   <button
                     onClick={toggleTheme}
-                    className="flex items-center gap-2 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] px-3 py-1.5 text-xs text-[#f5f5f7]"
+                    className="flex items-center gap-2 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] px-3 py-1.5 text-xs text-[#f5f5f7] cursor-pointer"
                   >
                     {theme === "dark" ? <Sun size={13} /> : <Moon size={13} />}
                     {theme === "dark" ? "Light Mode" : "Dark Mode"}
@@ -372,7 +447,7 @@ export default function Navbar({
 
                 <button
                   onClick={() => scrollToSection("#contact")}
-                  className="mt-3 flex items-center justify-center gap-2 rounded-2xl bg-[#2997ff] hover:bg-[#5eaeff] px-4 py-3 text-xs font-semibold text-white transition-colors"
+                  className="mt-3 flex items-center justify-center gap-2 rounded-2xl bg-[#2997ff] hover:bg-[#5eaeff] px-4 py-3 text-xs font-semibold text-white transition-colors cursor-pointer"
                 >
                   <Mail size={15} />
                   Let's Talk

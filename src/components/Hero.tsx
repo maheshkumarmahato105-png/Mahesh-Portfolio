@@ -119,6 +119,54 @@ export default function Hero({ data }: HeroProps) {
               {data.introduction}
             </motion.p>
 
+            {/* ─── Apple-Designed Instagram Profile Header (Mobile View) ─── */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616]/90 p-4.5 sm:hidden backdrop-blur-xl shadow-lg text-left"
+            >
+              <div className="flex items-center justify-between gap-4">
+                {/* Story Ring Avatar */}
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-[2px] bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff]">
+                  <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] text-sm font-semibold text-[#f5f5f7]">
+                    M
+                  </div>
+                </div>
+
+                {/* Instagram Stats Grid */}
+                <div className="grid flex-1 grid-cols-3 text-center">
+                  <div>
+                    <div className="text-base font-bold text-[#f5f5f7]">5</div>
+                    <div className="text-[10px] text-[#86868b]">Projects</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-bold text-[#f5f5f7]">10+</div>
+                    <div className="text-[10px] text-[#86868b]">Skills</div>
+                  </div>
+                  <div>
+                    <div className="text-base font-bold text-[#2997ff]">100%</div>
+                    <div className="text-[10px] text-[#86868b]">Responsive</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center gap-2">
+                <button
+                  onClick={scrollToContact}
+                  className="flex-1 rounded-full bg-[#2997ff] py-2 text-xs font-semibold text-white shadow-xs cursor-pointer active:scale-95"
+                >
+                  Message
+                </button>
+                <button
+                  onClick={scrollToWork}
+                  className="flex-1 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] py-2 text-xs font-semibold text-[#f5f5f7] cursor-pointer active:scale-95"
+                >
+                  View Feed
+                </button>
+              </div>
+            </motion.div>
+
             {/* Apple-Style Action Buttons with Mobile Active Touch Haptics */}
             <motion.div
               initial={{ opacity: 0, y: reduced ? 0 : 20 }}
