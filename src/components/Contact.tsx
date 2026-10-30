@@ -115,8 +115,10 @@ export default function Contact({ data }: ContactProps) {
       id="contact"
       className="relative overflow-hidden bg-[#111111] px-6 py-24 sm:py-32 lg:py-40"
     >
-      {/* Subtle ambient lighting */}
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[450px] w-[700px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(41,151,255,0.06)_0%,transparent_70%)] blur-3xl" />
+      {/* Living Ambient Aurora Color Animation */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="ambient-aurora opacity-45" />
+      </div>
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
@@ -156,9 +158,10 @@ export default function Contact({ data }: ContactProps) {
                 >
                   {data.email}
                 </a>
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.94 }}
                   onClick={handleCopyEmail}
-                  className="flex shrink-0 items-center gap-1.5 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] px-3 py-1.5 text-xs font-medium text-[#f5f5f7] hover:border-[rgba(255,255,255,0.24)] transition-all cursor-pointer"
+                  className="flex shrink-0 items-center gap-1.5 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] px-3 py-1.5 text-xs font-medium text-[#f5f5f7] hover:border-[rgba(255,255,255,0.24)] transition-all cursor-pointer select-none"
                   aria-label="Copy email address to clipboard"
                 >
                   {copied ? (
@@ -172,7 +175,7 @@ export default function Contact({ data }: ContactProps) {
                       <span>Copy</span>
                     </>
                   )}
-                </button>
+                </motion.button>
               </div>
             </div>
 
@@ -375,10 +378,11 @@ export default function Contact({ data }: ContactProps) {
             )}
 
             {/* Submit Action */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.96 }}
               type="submit"
               disabled={submitState === "submitting"}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] px-8 py-3.5 text-xs font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto cursor-pointer"
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] hover:shadow-[0_0_20px_rgba(41,151,255,0.35)] px-8 py-3.5 text-xs font-medium text-white transition-all disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto cursor-pointer"
             >
               {submitState === "submitting" ? (
                 <>
@@ -402,7 +406,7 @@ export default function Contact({ data }: ContactProps) {
                   {!data.formServiceUrl && <ExternalLink size={12} className="opacity-70" />}
                 </>
               )}
-            </button>
+            </motion.button>
           </motion.form>
         </div>
       </div>

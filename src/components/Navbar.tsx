@@ -254,24 +254,25 @@ export default function Navbar({
         </nav>
       </motion.header>
 
-      {/* Mobile Floating Bottom Navigation Dock */}
+      {/* Mobile Floating Bottom Navigation Dock with Tactile Haptics */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none">
-        <div className="pointer-events-auto grid grid-cols-5 w-full items-center rounded-full border border-[rgba(255,255,255,0.12)] bg-[rgba(28,28,30,0.85)] p-1.5 shadow-2xl backdrop-blur-2xl">
+        <div className="pointer-events-auto grid grid-cols-5 w-full items-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[rgba(24,24,27,0.92)] p-1.5 shadow-2xl backdrop-blur-2xl">
           {links.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId;
             return (
-              <button
+              <motion.button
                 key={link.href}
+                whileTap={{ scale: 0.86 }}
                 onClick={() => scrollToSection(link.href)}
-                className="relative flex flex-col items-center justify-center py-2 transition-colors cursor-pointer active:scale-95"
+                className="relative flex flex-col items-center justify-center py-2 transition-all cursor-pointer select-none"
                 aria-label={link.label}
               >
-                {/* Active Pill on Mobile */}
+                {/* Active Pill on Mobile with Subtle Iridescent Glow */}
                 {isActive && (
                   <motion.span
                     layoutId="mobile-active-nav"
-                    className="absolute inset-0 rounded-full bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.14)]"
+                    className="absolute inset-0 rounded-full bg-[rgba(41,151,255,0.14)] border border-[#2997ff]/40 shadow-[0_0_14px_rgba(41,151,255,0.28)]"
                     transition={{
                       type: "spring",
                       stiffness: 420,
@@ -283,7 +284,7 @@ export default function Navbar({
                 {/* Icon */}
                 <div
                   className={cn(
-                    "relative z-10 transition-colors",
+                    "relative z-10 transition-colors duration-200",
                     isActive ? "text-[#2997ff]" : "text-[#86868b]"
                   )}
                 >
@@ -294,7 +295,7 @@ export default function Navbar({
                 {isActive && (
                   <motion.span
                     layoutId="mobile-active-dot"
-                    className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-[#2997ff]"
+                    className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-[#2997ff] shadow-[0_0_6px_#2997ff]"
                     transition={{
                       type: "spring",
                       stiffness: 500,
@@ -302,7 +303,7 @@ export default function Navbar({
                     }}
                   />
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </div>

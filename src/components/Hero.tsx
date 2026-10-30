@@ -14,8 +14,8 @@ export default function Hero({ data }: HeroProps) {
   const reduced = prefersReducedMotion();
 
   // Subtle scroll parallax
-  const textY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 35]);
-  const visualY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : -25]);
+  const textY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 40]);
+  const visualY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : -30]);
   const opacity = useTransform(scrollY, [0, 480], [1, 0]);
 
   // Restrained pointer-responsive movement on desktop
@@ -57,10 +57,9 @@ export default function Hero({ data }: HeroProps) {
       onMouseLeave={handleMouseLeave}
       className="relative flex min-h-[92vh] items-center justify-center overflow-hidden px-6 pt-32 pb-20 lg:pt-36 lg:pb-28"
     >
-      {/* Slow, ambient radial lighting behind the main object */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-[550px] w-[800px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(41,151,255,0.09)_0%,rgba(16,16,20,0.04)_50%,transparent_75%)] blur-3xl" />
-        <div className="absolute top-1/4 h-[400px] w-[500px] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)] blur-2xl" />
+      {/* Living Ambient Aurora Color Animation */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="ambient-aurora" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
@@ -77,7 +76,7 @@ export default function Hero({ data }: HeroProps) {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
               className="flex flex-wrap items-center justify-center gap-3 lg:justify-start"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#161616] px-3.5 py-1 text-xs font-medium text-[#f5f5f7]">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#161616]/90 px-3.5 py-1 text-xs font-medium text-[#f5f5f7] backdrop-blur-md shadow-xs">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2997ff] opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2997ff]" />
@@ -89,7 +88,7 @@ export default function Hero({ data }: HeroProps) {
               </span>
             </motion.div>
 
-            {/* Cinematic Headline with Staggered Word Reveals */}
+            {/* Cinematic Headline with Living Iridescent Color Animation */}
             <div className="overflow-hidden">
               <motion.h1
                 initial={{ opacity: 0, y: reduced ? 0 : 32 }}
@@ -102,7 +101,7 @@ export default function Hero({ data }: HeroProps) {
                 className="text-4xl font-semibold tracking-tight text-[#f5f5f7] sm:text-6xl md:text-7xl lg:text-7xl leading-[1.05]"
               >
                 I build digital experiences that feel{" "}
-                <span className="gradient-text font-bold">effortless.</span>
+                <span className="text-iridescent font-bold">effortless.</span>
               </motion.h1>
             </div>
 
@@ -120,7 +119,7 @@ export default function Hero({ data }: HeroProps) {
               {data.introduction}
             </motion.p>
 
-            {/* Apple-Style Action Buttons */}
+            {/* Apple-Style Action Buttons with Mobile Active Touch Haptics */}
             <motion.div
               initial={{ opacity: 0, y: reduced ? 0 : 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -131,20 +130,22 @@ export default function Hero({ data }: HeroProps) {
               }}
               className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start pt-2"
             >
-              <button
+              <motion.button
+                whileTap={{ scale: 0.96 }}
                 onClick={scrollToWork}
                 className="group flex w-full items-center justify-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] px-7 py-3.5 text-sm font-medium text-white transition-all duration-200 active:scale-98 sm:w-auto shadow-sm cursor-pointer"
               >
                 <span>Explore Work</span>
                 <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
+                whileTap={{ scale: 0.96 }}
                 onClick={scrollToContact}
                 className="flex w-full items-center justify-center gap-2 rounded-full border border-[rgba(255,255,255,0.14)] bg-[#161616]/60 hover:bg-[#1c1c1e] text-[#f5f5f7] px-7 py-3.5 text-sm font-medium transition-all duration-200 active:scale-98 sm:w-auto backdrop-blur-md cursor-pointer"
               >
                 <span>Get in Touch</span>
-              </button>
+              </motion.button>
             </motion.div>
 
             {/* Technical Metadata Row */}
@@ -186,7 +187,7 @@ export default function Hero({ data }: HeroProps) {
             }}
             className="flex items-center justify-center lg:col-span-5 lg:justify-end"
           >
-            <div className="relative w-full max-w-[420px] rounded-3xl border border-[rgba(255,255,255,0.14)] bg-gradient-to-b from-[#1c1c1e]/90 via-[#161616]/95 to-[#0a0a0a]/98 p-6 shadow-2xl backdrop-blur-3xl sm:p-8">
+            <div className="relative w-full max-w-[420px] rounded-3xl border border-[rgba(255,255,255,0.14)] bg-gradient-to-b from-[#1c1c1e]/90 via-[#161616]/95 to-[#0a0a0a]/98 p-6 shadow-2xl backdrop-blur-3xl sm:p-8 active-border-glow transition-all">
               {/* Top Display Header */}
               <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] pb-5">
                 <div className="flex items-center gap-2">
@@ -197,7 +198,7 @@ export default function Hero({ data }: HeroProps) {
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[#86868b]">
                   Frontend Architecture
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#2997ff]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#2997ff] animate-ping" />
               </div>
 
               {/* Monolith Spec Sheet */}
@@ -253,13 +254,14 @@ export default function Hero({ data }: HeroProps) {
 
                 {/* Bottom Action Pill */}
                 <div className="pt-2">
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.97 }}
                     onClick={scrollToWork}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] hover:bg-[#252528] px-4 py-3 text-xs font-medium text-[#f5f5f7] transition-colors cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] hover:bg-[#252528] px-4 py-3 text-xs font-medium text-[#f5f5f7] transition-all cursor-pointer"
                   >
                     <span>View Selected Works</span>
                     <ArrowRight size={13} className="text-[#2997ff]" />
-                  </button>
+                  </motion.button>
                 </div>
               </div>
             </div>
@@ -279,8 +281,8 @@ export default function Hero({ data }: HeroProps) {
           className="scroll-indicator flex flex-col items-center gap-1.5 text-[#86868b] hover:text-[#f5f5f7] transition-colors cursor-pointer"
           aria-label="Scroll to projects section"
         >
-          <span className="text-[10px] font-semibold uppercase tracking-widest">Scroll</span>
-          <ArrowDown size={13} />
+          <span className="text-[10px] font-semibold uppercase tracking-widest">Scroll to explore</span>
+          <ArrowDown size={13} className="text-[#2997ff]" />
         </button>
       </motion.div>
     </section>

@@ -175,31 +175,38 @@ export default function StoriesBar() {
 
   return (
     <>
-      {/* Editorial Key Highlights Strip */}
-      <div className="relative mx-auto max-w-7xl px-6 py-6 overflow-hidden">
-        <div className="flex items-center justify-start sm:justify-center gap-3 overflow-x-auto no-scrollbar py-2">
+      {/* Editorial Key Highlights Strip — Progressive Scroll Entrance */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+        className="relative mx-auto max-w-7xl px-6 py-6 overflow-hidden"
+      >
+        <div className="flex items-center justify-start sm:justify-center gap-3 overflow-x-auto no-scrollbar py-2 snap-x snap-mandatory">
           {highlightsData.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <button
+              <motion.button
                 key={item.id}
+                whileTap={{ scale: 0.94 }}
                 onClick={() => openStory(idx)}
-                className="group flex items-center gap-2.5 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#161616] hover:bg-[#1c1c1e] hover:border-[rgba(255,255,255,0.22)] px-4 py-2 transition-all cursor-pointer shrink-0"
+                className="group flex items-center gap-2.5 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#161616] hover:bg-[#1c1c1e] hover:border-[#2997ff]/40 px-4 py-2 transition-all cursor-pointer shrink-0 snap-start shadow-xs hover:shadow-[0_0_15px_rgba(41,151,255,0.15)]"
               >
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/6 text-[#2997ff] group-hover:scale-105 transition-transform">
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2997ff]/10 text-[#2997ff] group-hover:scale-110 group-hover:bg-[#2997ff]/20 transition-all">
                   <Icon size={12} />
                 </div>
                 <span className="text-xs font-medium text-[#f5f5f7] tracking-tight">
                   {item.name}
                 </span>
-                <span className="text-[10px] text-[#86868b] uppercase tracking-wider">
+                <span className="text-[10px] text-[#86868b] uppercase tracking-wider group-hover:text-[#a1a1a6] transition-colors">
                   {item.tagline}
                 </span>
-              </button>
+              </motion.button>
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* Feature Sheet Modal */}
       <AnimatePresence>

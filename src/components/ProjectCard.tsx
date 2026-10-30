@@ -23,16 +23,17 @@ export default function ProjectCard({
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: reduced ? 0 : 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: reduced ? 0 : 35, scale: reduced ? 1 : 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.15 }}
       exit={{ opacity: 0, scale: 0.96 }}
+      whileTap={{ scale: 0.985 }}
       transition={{
-        delay: (index % 3) * 0.1,
+        delay: (index % 2) * 0.1,
         duration: 0.7,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616] transition-all duration-300 hover:border-[rgba(255,255,255,0.24)] hover:bg-[#19191b] ${
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616] transition-all duration-300 hover:border-[#2997ff]/40 hover:shadow-[0_0_30px_rgba(41,151,255,0.12)] hover:bg-[#18181a] ${
         isFeatured ? "lg:col-span-2" : "col-span-1"
       }`}
     >
@@ -49,7 +50,7 @@ export default function ProjectCard({
               src={project.imageUrl}
               alt={project.title}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
               }}
@@ -68,8 +69,9 @@ export default function ProjectCard({
 
         {/* Card Content */}
         <div className="p-6 sm:p-8">
-          {/* Eyebrow Category */}
+          {/* Eyebrow Category with Blue Pip */}
           <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2997ff]" />
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2997ff]">
               {project.category}
             </span>
@@ -90,7 +92,7 @@ export default function ProjectCard({
             {project.technologies.map((tech) => (
               <span
                 key={tech}
-                className="rounded-md border border-[rgba(255,255,255,0.08)] bg-[#1c1c1e] px-2.5 py-1 text-[11px] font-mono text-[#86868b]"
+                className="rounded-md border border-[rgba(255,255,255,0.08)] bg-[#1c1c1e] px-2.5 py-1 text-[11px] font-mono text-[#86868b] transition-colors group-hover:text-[#a1a1a6]"
               >
                 {tech}
               </span>
@@ -99,11 +101,11 @@ export default function ProjectCard({
         </div>
       </div>
 
-      {/* Footer Action Bar */}
+      {/* Footer Action Bar with Touch Optimized Targets */}
       <div className="flex items-center justify-between border-t border-[rgba(255,255,255,0.08)] px-6 py-4 sm:px-8">
         <button
           onClick={() => onSelect(project)}
-          className="group/link flex items-center gap-1.5 text-xs font-medium text-[#2997ff] hover:text-[#5eaeff] transition-colors cursor-pointer"
+          className="group/link flex items-center gap-1.5 text-xs font-medium text-[#2997ff] hover:text-[#5eaeff] transition-colors cursor-pointer py-1"
         >
           <span>View Overview</span>
           <ArrowRight size={13} className="transition-transform group-hover/link:translate-x-0.5" />
@@ -115,7 +117,7 @@ export default function ProjectCard({
               href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:text-[#f5f5f7] transition-colors"
+              className="flex items-center gap-1 hover:text-[#f5f5f7] transition-colors py-1"
             >
               <span>Demo</span>
               <ExternalLink size={12} />
@@ -126,7 +128,7 @@ export default function ProjectCard({
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:text-[#f5f5f7] transition-colors"
+              className="flex items-center gap-1 hover:text-[#f5f5f7] transition-colors py-1"
             >
               <Code2 size={13} />
               <span>Source</span>

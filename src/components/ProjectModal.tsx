@@ -146,15 +146,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               {/* Action Links */}
               <div className="mt-8 flex flex-wrap gap-3 border-t border-[rgba(255,255,255,0.08)] pt-6">
                 {project.demoUrl ? (
-                  <a
+                  <motion.a
+                    whileTap={{ scale: 0.96 }}
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] px-6 py-2.5 text-xs font-medium text-white transition-colors"
+                    className="flex items-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] hover:shadow-[0_0_15px_rgba(41,151,255,0.35)] px-6 py-2.5 text-xs font-medium text-white transition-all cursor-pointer"
                   >
                     <ExternalLink size={13} />
                     Live Demo
-                  </a>
+                  </motion.a>
                 ) : (
                   <span className="flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.08)] px-5 py-2.5 text-xs text-[#86868b] opacity-60">
                     <ExternalLink size={13} />
@@ -163,15 +164,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 )}
 
                 {project.repoUrl ? (
-                  <a
+                  <motion.a
+                    whileTap={{ scale: 0.96 }}
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] hover:bg-[#252528] px-6 py-2.5 text-xs font-medium text-[#f5f5f7] transition-colors"
+                    className="flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.12)] bg-[#1c1c1e] hover:bg-[#252528] px-6 py-2.5 text-xs font-medium text-[#f5f5f7] transition-all cursor-pointer"
                   >
                     <Code2 size={14} />
                     View Source
-                  </a>
+                  </motion.a>
                 ) : (
                   <span className="flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.08)] px-5 py-2.5 text-xs text-[#86868b] opacity-60">
                     <Code2 size={14} />
