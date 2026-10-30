@@ -1,5 +1,5 @@
-import { useState, useRef, type ReactNode } from "react";
-import { motion, useInView, AnimatePresence } from "motion/react";
+import { useState, type ReactNode } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   Code2,
   Palette,
@@ -34,10 +34,7 @@ interface SkillsProps {
 }
 
 export default function Skills({ skills }: SkillsProps) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const reduced = prefersReducedMotion();
-
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   // Group by category and include "All"
@@ -51,7 +48,6 @@ export default function Skills({ skills }: SkillsProps) {
   return (
     <section
       id="skills"
-      ref={ref}
       className="relative px-6 py-24 sm:py-32 lg:py-40"
     >
       {/* Background accent */}
@@ -62,14 +58,14 @@ export default function Skills({ skills }: SkillsProps) {
           label="Skills"
           title="Technologies I work with"
           description="A specialized toolkit focused on modern frontend engineering, performance, and responsive interfaces."
-          inView={inView}
         />
 
-        {/* Category filter pills */}
+        {/* Category filter pills - loads into view upon scrolling */}
         <motion.div
-          initial={{ opacity: 0, y: reduced ? 0 : 15 }}
-          animate={inView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
           className="mt-10 flex flex-wrap justify-center gap-2"
           role="tablist"
           aria-label="Filter skills by category"
@@ -91,7 +87,7 @@ export default function Skills({ skills }: SkillsProps) {
           ))}
         </motion.div>
 
-        {/* Skills Grid */}
+        {/* Skills Grid - progressively reveals on scroll down */}
         <div
           className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
           role="tabpanel"
@@ -101,12 +97,13 @@ export default function Skills({ skills }: SkillsProps) {
               <motion.div
                 key={skill.name}
                 layout
-                initial={{ opacity: 0, y: reduced ? 0 : 25, scale: reduced ? 1 : 0.95 }}
-                animate={inView ? { opacity: 1, y: 0, scale: 1 } : undefined}
+                initial={{ opacity: 0, y: reduced ? 0 : 35, scale: reduced ? 1 : 0.92 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
                 exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                 transition={{
-                  delay: reduced ? 0 : 0.05 * i,
-                  duration: 0.45,
+                  delay: reduced ? 0 : 0.06 * (i % 5),
+                  duration: 0.5,
                   ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
                 }}
                 whileHover={reduced ? {} : { y: -5, scale: 1.02 }}

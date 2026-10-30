@@ -7,14 +7,13 @@ import ProjectGraphic from "@/components/ProjectGraphic";
 interface ProjectCardProps {
   project: Project;
   index: number;
-  inView: boolean;
+  inView?: boolean;
   onSelect: (project: Project) => void;
 }
 
 export default function ProjectCard({
   project,
   index,
-  inView,
   onSelect,
 }: ProjectCardProps) {
   const reduced = prefersReducedMotion();
@@ -22,12 +21,13 @@ export default function ProjectCard({
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: reduced ? 0 : 40, scale: reduced ? 1 : 0.95 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      initial={{ opacity: 0, y: reduced ? 0 : 45, scale: reduced ? 1 : 0.94 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{
-        delay: 0.3 + index * 0.1,
-        duration: 0.6,
+        delay: (index % 3) * 0.12,
+        duration: 0.65,
         ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       }}
       whileHover={reduced ? {} : { y: -6 }}

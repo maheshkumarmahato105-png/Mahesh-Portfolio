@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from "react";
-import { motion, useInView, AnimatePresence } from "motion/react";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import type { Project, ProjectCategory } from "@/types";
 import { prefersReducedMotion } from "@/lib/utils";
 import SectionHeading from "@/components/SectionHeading";
@@ -18,10 +18,7 @@ const filterCategories: ProjectCategory[] = [
 ];
 
 export default function Projects({ projects }: ProjectsProps) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const reduced = prefersReducedMotion();
-
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -41,7 +38,6 @@ export default function Projects({ projects }: ProjectsProps) {
   return (
     <section
       id="projects"
-      ref={ref}
       className="relative px-6 py-24 sm:py-32 lg:py-40"
     >
       {/* Background */}
@@ -54,14 +50,14 @@ export default function Projects({ projects }: ProjectsProps) {
           label="Projects"
           title="Selected work"
           description="A showcase of projects I've built. Replace these samples with your real work."
-          inView={inView}
         />
 
-        {/* Category Filters */}
+        {/* Category Filters - loads into view on scroll */}
         <motion.div
-          initial={{ opacity: 0, y: reduced ? 0 : 15 }}
-          animate={inView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          initial={{ opacity: 0, y: reduced ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
           className="mt-10 flex flex-wrap justify-center gap-2"
           role="tablist"
           aria-label="Filter projects by category"
@@ -83,7 +79,7 @@ export default function Projects({ projects }: ProjectsProps) {
           ))}
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid - cards progressively reveal as you scroll down */}
         <div
           className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
           role="tabpanel"
@@ -94,7 +90,6 @@ export default function Projects({ projects }: ProjectsProps) {
                 key={project.id}
                 project={project}
                 index={i}
-                inView={inView}
                 onSelect={openModal}
               />
             ))}

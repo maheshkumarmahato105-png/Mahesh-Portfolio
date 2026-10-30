@@ -1,5 +1,5 @@
-import { useRef, useState, useCallback } from "react";
-import { motion, useInView } from "motion/react";
+import { useState, useCallback } from "react";
+import { motion } from "motion/react";
 import { Send, Copy, Check, Mail, Download, AlertCircle, ExternalLink } from "lucide-react";
 import type { PortfolioConfig, ContactFormData, ContactFormErrors } from "@/types";
 import { isValidEmail, copyToClipboard, prefersReducedMotion } from "@/lib/utils";
@@ -12,8 +12,6 @@ interface ContactProps {
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
 export default function Contact({ data }: ContactProps) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const reduced = prefersReducedMotion();
 
   const [formData, setFormData] = useState<ContactFormData>({
@@ -117,7 +115,6 @@ export default function Contact({ data }: ContactProps) {
   return (
     <section
       id="contact"
-      ref={ref}
       className="relative px-6 py-24 sm:py-32 lg:py-40"
     >
       {/* Background accents */}
@@ -131,15 +128,15 @@ export default function Contact({ data }: ContactProps) {
           label="Contact"
           title="Let's build something great"
           description="Have an opportunity, project, or question? Send a message or connect directly."
-          inView={inView}
         />
 
         <div className="mt-16 grid gap-12 lg:grid-cols-5 lg:gap-16">
-          {/* Left: Contact Info & Channels */}
+          {/* Left: Contact Info & Channels - reveals upon scrolling down */}
           <motion.div
-            initial={{ opacity: 0, x: reduced ? 0 : -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : undefined}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            initial={{ opacity: 0, y: reduced ? 0 : 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             className="space-y-6 lg:col-span-2"
           >
             <div>
@@ -250,11 +247,12 @@ export default function Contact({ data }: ContactProps) {
             )}
           </motion.div>
 
-          {/* Right: Functional Form */}
+          {/* Right: Functional Form - reveals upon scrolling down */}
           <motion.form
-            initial={{ opacity: 0, x: reduced ? 0 : 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : undefined}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            initial={{ opacity: 0, y: reduced ? 0 : 40, scale: reduced ? 1 : 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ delay: 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             onSubmit={handleSubmit}
             noValidate
             className="space-y-5 rounded-3xl border border-(--color-border) bg-(--color-bg-glass) p-6 sm:p-8 backdrop-blur-md lg:col-span-3"
