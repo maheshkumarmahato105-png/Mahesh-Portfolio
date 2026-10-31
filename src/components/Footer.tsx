@@ -19,7 +19,7 @@ export default function Footer({ data }: FooterProps) {
   };
 
   return (
-    <footer className="border-t border-[rgba(255,255,255,0.12)] bg-[#0a0a0a] px-6 pt-12 pb-24 sm:pb-12 text-[#86868b] transition-colors duration-300">
+    <footer className="border-t border-[rgba(255,255,255,0.12)] bg-[#0a0a0a] px-4 sm:px-6 pt-12 pb-28 sm:pb-12 text-[#86868b] transition-colors duration-300">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           {/* Logo & Tagline */}

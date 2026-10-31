@@ -52,7 +52,7 @@ export default function Skills({ skills }: SkillsProps) {
   return (
     <section
       id="skills"
-      className="relative overflow-hidden bg-[#0a0a0a] px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-[#0a0a0a] px-4 sm:px-6 py-16 sm:py-28 lg:py-36"
     >
       {/* Living Ambient Aurora Color Animation */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -96,7 +96,7 @@ export default function Skills({ skills }: SkillsProps) {
 
         {/* Skills Grid with Staggered Scroll-Triggered Progressive Reveals */}
         <div
-          className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+          className="mt-10 sm:mt-12 grid grid-cols-2 gap-2.5 sm:gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
           role="tabpanel"
         >
           <AnimatePresence mode="popLayout">
@@ -118,7 +118,7 @@ export default function Skills({ skills }: SkillsProps) {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => toggleSkillActive(skill.name)}
-                  className={`group relative flex h-full flex-col justify-between rounded-2xl border p-5 transition-all cursor-pointer select-none ${
+                  className={`group relative flex h-full flex-col justify-between rounded-2xl border p-3.5 sm:p-5 transition-all cursor-pointer select-none ${
                     isSelected
                       ? "border-[#2997ff] bg-[#1c1c1e] shadow-[0_0_24px_rgba(41,151,255,0.22)]"
                       : "border-[rgba(255,255,255,0.12)] bg-[#161616] hover:border-[#2997ff]/40 hover:bg-[#1c1c1e] hover:shadow-[0_0_18px_rgba(41,151,255,0.12)]"

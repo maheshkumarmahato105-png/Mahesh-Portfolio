@@ -55,7 +55,7 @@ export default function Hero({ data }: HeroProps) {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden px-6 pt-32 pb-20 lg:pt-36 lg:pb-28"
+      className="relative flex min-h-[90vh] sm:min-h-[92vh] items-center justify-center overflow-hidden px-4 sm:px-6 pt-24 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-28"
     >
       {/* Living Ambient Aurora Color Animation */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -98,7 +98,7 @@ export default function Hero({ data }: HeroProps) {
                   delay: 0.12,
                   ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
                 }}
-                className="text-4xl font-semibold tracking-tight text-[#f5f5f7] sm:text-6xl md:text-7xl lg:text-7xl leading-[1.05]"
+                className="text-3xl font-semibold tracking-tight text-[#f5f5f7] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08]"
               >
                 I build digital experiences that feel{" "}
                 <span className="text-iridescent font-bold">effortless.</span>
@@ -124,7 +124,7 @@ export default function Hero({ data }: HeroProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616]/90 p-4.5 sm:hidden backdrop-blur-xl shadow-lg text-left"
+              className="rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616]/90 p-4 lg:hidden backdrop-blur-xl shadow-lg text-left"
             >
               <div className="flex items-center justify-between gap-4">
                 {/* Story Ring Avatar */}
@@ -219,7 +219,7 @@ export default function Hero({ data }: HeroProps) {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Architectural Glass Monolith Object */}
+          {/* Right Column: Architectural Glass Monolith Object (Desktop & Tablet) */}
           <motion.div
             style={{
               y: visualY,
@@ -233,7 +233,7 @@ export default function Hero({ data }: HeroProps) {
               delay: 0.2,
               ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
             }}
-            className="flex items-center justify-center lg:col-span-5 lg:justify-end"
+            className="hidden lg:flex items-center justify-center lg:col-span-5 lg:justify-end"
           >
             <div className="relative w-full max-w-[420px] rounded-3xl border border-[rgba(255,255,255,0.14)] bg-gradient-to-b from-[#1c1c1e]/90 via-[#161616]/95 to-[#0a0a0a]/98 p-6 shadow-2xl backdrop-blur-3xl sm:p-8 active-border-glow transition-all">
               {/* Top Display Header */}

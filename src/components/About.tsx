@@ -37,7 +37,7 @@ export default function About({ data }: AboutProps) {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[#111111] px-6 py-24 sm:py-32 lg:py-40 transition-colors"
+      className="relative overflow-hidden bg-[#111111] px-4 sm:px-6 py-16 sm:py-28 lg:py-36 transition-colors"
     >
       {/* Living Ambient Aurora Color Animation */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -115,7 +115,7 @@ export default function About({ data }: AboutProps) {
             </div>
 
             {/* Key Statistics Grid — Staggered Entrance on Scroll */}
-            <div className="grid grid-cols-3 gap-4 pt-2">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-2">
               {data.stats.map((stat, idx) => (
                 <motion.div
                   key={stat.label}
@@ -129,15 +129,15 @@ export default function About({ data }: AboutProps) {
                   }}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.96 }}
-                  className="rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 text-center transition-all hover:border-[#2997ff]/40 hover:shadow-[0_0_20px_rgba(41,151,255,0.1)] cursor-pointer"
+                  className="rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-3 sm:p-5 text-center transition-all hover:border-[#2997ff]/40 hover:shadow-[0_0_20px_rgba(41,151,255,0.1)] cursor-pointer"
                 >
-                  <div className="text-3xl font-semibold tracking-tight text-[#f5f5f7] sm:text-4xl">
+                  <div className="text-2xl font-semibold tracking-tight text-[#f5f5f7] sm:text-4xl">
                     {stat.value}
                     {stat.suffix && (
                       <span className="text-[#2997ff]">{stat.suffix}</span>
                     )}
                   </div>
-                  <div className="mt-1 text-xs text-[#86868b]">
+                  <div className="mt-1 text-[11px] sm:text-xs text-[#86868b] leading-tight">
                     {stat.label}
                   </div>
                 </motion.div>

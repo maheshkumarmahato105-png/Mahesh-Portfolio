@@ -39,7 +39,7 @@ export default function Projects({ projects }: ProjectsProps) {
   return (
     <section
       id="projects"
-      className="relative overflow-hidden bg-[#0a0a0a] px-4 sm:px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-[#0a0a0a] px-4 sm:px-6 py-16 sm:py-28 lg:py-36"
     >
       {/* Living Ambient Aurora Color Animation */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -114,7 +114,7 @@ export default function Projects({ projects }: ProjectsProps) {
         {/* ─── Projects Presentation: Feed vs Grid View ─── */}
         {viewMode === "feed" ? (
           /* Feed Mode: Full Instagram-Style Cards */
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div className="mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
             <AnimatePresence mode="popLayout">
               {filtered.map((project, index) => (
                 <ProjectCard

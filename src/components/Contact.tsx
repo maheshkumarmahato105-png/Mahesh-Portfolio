@@ -113,7 +113,7 @@ export default function Contact({ data }: ContactProps) {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#111111] px-6 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden bg-[#111111] px-4 sm:px-6 py-16 sm:py-28 lg:py-36"
     >
       {/* Living Ambient Aurora Color Animation */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -247,7 +247,7 @@ export default function Contact({ data }: ContactProps) {
             transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
             onSubmit={handleSubmit}
             noValidate
-            className="space-y-5 rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-6 sm:p-8 lg:col-span-3"
+            className="space-y-5 rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-5 sm:p-8 lg:col-span-3"
           >
             <div className="grid gap-5 sm:grid-cols-2">
               {/* Name */}
