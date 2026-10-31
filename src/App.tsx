@@ -18,7 +18,7 @@ export default function App() {
   const { activeSection, setActiveSection } = useActiveSection(sectionIds);
 
   return (
-    <div className={`min-h-screen bg-[#0a0a0a] text-[#f5f5f7] selection:bg-[#2997ff] selection:text-white transition-colors duration-500 ${isDark ? "dark" : "light"}`}>
+    <div className={`min-h-screen bg-[#0a0a0a] text-[#f5f5f7] selection:bg-[#2997ff] selection:text-white transition-colors duration-500 overflow-x-clip w-full relative ${isDark ? "dark" : "light"}`}>
       <Navbar
         links={portfolio.navLinks}
         activeSection={activeSection}

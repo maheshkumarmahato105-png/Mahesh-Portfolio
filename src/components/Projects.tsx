@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Grid3X3, Rows, Heart, MessageCircle, Sparkles } from "lucide-react";
 import type { Project, ProjectCategory } from "@/types";
@@ -22,6 +22,30 @@ export default function Projects({ projects }: ProjectsProps) {
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>("All");
   const [viewMode, setViewMode] = useState<"feed" | "grid">("feed");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [likedProjects, setLikedProjects] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem("portfolio_liked_projects");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Keep grid view synchronized with persistent likes
+  useEffect(() => {
+    const checkLikes = () => {
+      try {
+        const saved = localStorage.getItem("portfolio_liked_projects");
+        if (saved) setLikedProjects(JSON.parse(saved));
+      } catch {}
+    };
+    window.addEventListener("storage", checkLikes);
+    const interval = setInterval(checkLikes, 1500);
+    return () => {
+      window.removeEventListener("storage", checkLikes);
+      clearInterval(interval);
+    };
+  }, []);
 
   const filtered =
     activeFilter === "All"
@@ -176,8 +200,13 @@ export default function Projects({ projects }: ProjectsProps) {
                       </span>
                       <div className="flex items-center gap-2 text-white/90 shrink-0 font-medium">
                         <span className="flex items-center gap-0.5">
-                          <Heart size={10} className="fill-[#ff375f] text-[#ff375f]" />
-                          <span>{48 + index * 9}</span>
+                          <Heart
+                            size={10}
+                            className={`fill-[#ed4956] text-[#ed4956] ${
+                              likedProjects.includes(project.id) ? "scale-110 drop-shadow-[0_0_6px_rgba(237,73,86,0.6)]" : ""
+                            }`}
+                          />
+                          <span>{48 + index * 9 + (likedProjects.includes(project.id) ? 1 : 0)}</span>
                         </span>
                         <span className="flex items-center gap-0.5">
                           <MessageCircle size={10} className="fill-white/80" />
@@ -197,8 +226,13 @@ export default function Projects({ projects }: ProjectsProps) {
                     </span>
                     <div className="mt-3 flex items-center gap-4 text-xs font-bold text-white">
                       <div className="flex items-center gap-1">
-                        <Heart size={14} className="fill-[#ff375f] text-[#ff375f]" />
-                        <span>{48 + index * 9}</span>
+                        <Heart
+                          size={14}
+                          className={`fill-[#ed4956] text-[#ed4956] ${
+                            likedProjects.includes(project.id) ? "scale-110 drop-shadow-[0_0_8px_rgba(237,73,86,0.8)]" : ""
+                          }`}
+                        />
+                        <span>{48 + index * 9 + (likedProjects.includes(project.id) ? 1 : 0)}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <MessageCircle size={14} className="fill-white" />

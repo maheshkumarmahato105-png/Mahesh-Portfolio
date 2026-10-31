@@ -127,8 +127,8 @@ export default function Hero({ data }: HeroProps) {
               className="rounded-3xl border border-[rgba(255,255,255,0.12)] bg-[#161616]/90 p-4 lg:hidden backdrop-blur-xl shadow-lg text-left"
             >
               <div className="flex items-center justify-between gap-4">
-                {/* Story Ring Avatar */}
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-[2px] bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff]">
+                {/* Story Ring Avatar with Authentic Instagram Sunset Gradient */}
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full p-[2.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_15px_rgba(220,39,67,0.35)]">
                   <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] text-sm font-semibold text-[#f5f5f7]">
                     M
                   </div>

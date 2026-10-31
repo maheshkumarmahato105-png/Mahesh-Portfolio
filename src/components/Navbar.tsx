@@ -336,10 +336,10 @@ export default function Navbar({
 
       {/* ─── Mobile Floating Bottom Navigation Dock (iOS Instagram Tabs) ─── */}
       <div
-        className="fixed inset-x-0 mx-auto z-40 w-[calc(100%-1.5rem)] max-w-[340px] md:hidden pointer-events-none"
+        className="fixed inset-x-0 z-40 flex justify-center px-3 pointer-events-none md:hidden"
         style={{ bottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
       >
-        <div className="pointer-events-auto grid grid-cols-5 w-full items-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[rgba(24,24,27,0.92)] p-1.5 shadow-2xl backdrop-blur-2xl">
+        <div className="pointer-events-auto grid grid-cols-5 w-full max-w-[340px] items-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[#161616]/95 backdrop-blur-2xl p-1 shadow-2xl">
           {links.map((link) => {
             const sectionId = link.href.replace("#", "");
             const isActive = activeSection === sectionId;

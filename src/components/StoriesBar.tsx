@@ -197,7 +197,7 @@ export default function StoriesBar() {
             className="flex flex-col items-center gap-1.5 cursor-pointer shrink-0 snap-start group select-none"
           >
             <div className="relative">
-              <div className="flex h-16 w-16 sm:h-[70px] sm:w-[70px] items-center justify-center rounded-full p-[2px] bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff] shadow-[0_0_15px_rgba(41,151,255,0.3)] transition-transform duration-300 group-hover:scale-105">
+              <div className="flex h-16 w-16 sm:h-[70px] sm:w-[70px] items-center justify-center rounded-full p-[2.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_15px_rgba(220,39,67,0.35)] transition-transform duration-300 group-hover:scale-105">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] border-2 border-[#0a0a0a] text-sm font-semibold text-[#f5f5f7]">
                   M
                 </div>
@@ -209,7 +209,7 @@ export default function StoriesBar() {
             <span className="text-[11px] font-medium text-[#f5f5f7] tracking-tight">Your Story</span>
           </div>
 
-          {/* Highlight Stories with Apple Iridescent Rings */}
+          {/* Highlight Stories with Authentic Instagram Sunset Gradient Rings */}
           {storiesData.map((story, idx) => {
             const Icon = story.icon;
             const isSeen = seenStories[story.id];
@@ -221,13 +221,13 @@ export default function StoriesBar() {
                 className="flex flex-col items-center gap-1.5 cursor-pointer shrink-0 snap-start group select-none"
               >
                 <div
-                  className={`flex h-16 w-16 sm:h-[70px] sm:w-[70px] items-center justify-center rounded-full p-[2px] transition-all duration-300 group-hover:scale-105 ${
+                  className={`flex h-16 w-16 sm:h-[70px] sm:w-[70px] items-center justify-center rounded-full p-[2.5px] transition-all duration-300 group-hover:scale-105 ${
                     isSeen
                       ? "border border-white/20 bg-transparent"
-                      : "bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff] shadow-[0_0_15px_rgba(41,151,255,0.25)]"
+                      : "bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_15px_rgba(220,39,67,0.3)]"
                   }`}
                 >
-                  <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] border-2 border-[#0a0a0a] text-[#2997ff]">
+                  <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] border-2 border-[#0a0a0a] text-[#f5f5f7] group-hover:text-[#2997ff] transition-colors">
                     <Icon size={20} className="transition-transform group-hover:scale-110" />
                   </div>
                 </div>
@@ -257,8 +257,8 @@ export default function StoriesBar() {
               onTouchStart={() => setIsPaused(true)}
               onTouchEnd={() => setIsPaused(false)}
             >
-              {/* Subtle ambient lighting */}
-              <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(41,151,255,0.25)_0%,transparent_70%)] blur-3xl" />
+              {/* Subtle Instagram ambient lighting */}
+              <div className="pointer-events-none absolute -top-24 -left-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(240,148,51,0.2)_0%,rgba(220,39,67,0.15)_40%,transparent_70%)] blur-3xl" />
 
               {/* Segmented Top Progress Bars */}
               <div className="relative z-10 flex gap-1.5 pt-1">
@@ -285,7 +285,7 @@ export default function StoriesBar() {
               {/* Story Header */}
               <div className="relative z-10 mt-4 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full p-[1.5px] bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full p-[1.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888]">
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] text-xs font-semibold text-white">
                       M
                     </div>
@@ -312,7 +312,7 @@ export default function StoriesBar() {
 
               {/* Story Middle Content */}
               <div className="relative z-10 my-auto py-6">
-                <span className="inline-block rounded-full border border-[#2997ff]/30 bg-[#2997ff]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#2997ff]">
+                <span className="inline-block rounded-full border border-[#dc2743]/30 bg-gradient-to-r from-[#f09433]/15 via-[#dc2743]/15 to-[#bc1888]/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#ff8ba7]">
                   {activeStory.tagline}
                 </span>
                 <h2 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl text-[#f5f5f7]">
@@ -332,7 +332,7 @@ export default function StoriesBar() {
                 <motion.button
                   whileTap={{ scale: 0.96 }}
                   onClick={() => handleAction(activeStory.actionHref)}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#2997ff] hover:bg-[#5eaeff] hover:shadow-[0_0_20px_rgba(41,151,255,0.4)] py-3.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg transition-all cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-95 shadow-[0_0_25px_rgba(220,39,67,0.35)] py-3.5 text-xs font-semibold uppercase tracking-wider text-white transition-all cursor-pointer"
                 >
                   <span>{activeStory.actionLabel}</span>
                   <ExternalLink size={14} />

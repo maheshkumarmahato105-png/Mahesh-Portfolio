@@ -31,13 +31,52 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const reduced = prefersReducedMotion();
 
-  // Instagram Interactive States
-  const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(48 + index * 9);
+  // Instagram Interactive States with LocalStorage persistence
+  const [isLiked, setIsLiked] = useState(() => {
+    try {
+      const saved = localStorage.getItem("portfolio_liked_projects");
+      if (saved) {
+        const likedIds = JSON.parse(saved);
+        return Array.isArray(likedIds) && likedIds.includes(project.id);
+      }
+    } catch {
+      // fallback
+    }
+    return false;
+  });
+
+  const baseLikes = 48 + index * 9;
+  const [likesCount, setLikesCount] = useState(() => {
+    try {
+      const saved = localStorage.getItem("portfolio_liked_projects");
+      if (saved) {
+        const likedIds = JSON.parse(saved);
+        if (Array.isArray(likedIds) && likedIds.includes(project.id)) {
+          return baseLikes + 1;
+        }
+      }
+    } catch {}
+    return baseLikes;
+  });
+
   const [isSaved, setIsSaved] = useState(false);
   const [showHeartBurst, setShowHeartBurst] = useState(false);
   const [copied, setCopied] = useState(false);
   const lastTapRef = useRef<number>(0);
+
+  const toggleLikePersist = (liked: boolean) => {
+    try {
+      const saved = localStorage.getItem("portfolio_liked_projects");
+      let likedIds: string[] = saved ? JSON.parse(saved) : [];
+      if (!Array.isArray(likedIds)) likedIds = [];
+      if (liked) {
+        if (!likedIds.includes(project.id)) likedIds.push(project.id);
+      } else {
+        likedIds = likedIds.filter((id) => id !== project.id);
+      }
+      localStorage.setItem("portfolio_liked_projects", JSON.stringify(likedIds));
+    } catch {}
+  };
 
   // Instagram double-tap to like on mobile and desktop
   const handleImageTap = () => {
@@ -46,6 +85,7 @@ export default function ProjectCard({
       if (!isLiked) {
         setIsLiked(true);
         setLikesCount((prev) => prev + 1);
+        toggleLikePersist(true);
       }
       setShowHeartBurst(true);
       setTimeout(() => setShowHeartBurst(false), 900);
@@ -58,9 +98,11 @@ export default function ProjectCard({
     if (isLiked) {
       setIsLiked(false);
       setLikesCount((prev) => Math.max(0, prev - 1));
+      toggleLikePersist(false);
     } else {
       setIsLiked(true);
       setLikesCount((prev) => prev + 1);
+      toggleLikePersist(true);
       setShowHeartBurst(true);
       setTimeout(() => setShowHeartBurst(false), 900);
     }
@@ -99,8 +141,8 @@ export default function ProjectCard({
         {/* ─── Apple-Styled Instagram Post Header ─── */}
         <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] px-5 py-3.5">
           <div className="flex items-center gap-2.5">
-            {/* Story Ring Avatar */}
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-full p-[1.5px] bg-gradient-to-tr from-[#2997ff] via-[#a259ff] to-[#00d2ff]">
+            {/* Story Ring Avatar with Authentic Instagram Sunset Gradient */}
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-full p-[1.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-[0_0_10px_rgba(220,39,67,0.3)]">
               <div className="flex h-full w-full items-center justify-center rounded-full bg-[#161616] text-[11px] font-semibold text-[#f5f5f7]">
                 M
               </div>
@@ -160,7 +202,7 @@ export default function ProjectCard({
               >
                 <Heart
                   size={96}
-                  className="fill-[#ff375f] text-[#ff375f] drop-shadow-[0_0_35px_rgba(255,55,95,0.7)]"
+                  className="fill-[#ed4956] text-[#ed4956] drop-shadow-[0_0_35px_rgba(237,73,86,0.75)]"
                 />
               </motion.div>
             )}
@@ -182,7 +224,7 @@ export default function ProjectCard({
               whileTap={{ scale: 0.8 }}
               onClick={handleToggleLike}
               className={`transition-colors cursor-pointer ${
-                isLiked ? "text-[#ff375f]" : "text-[#f5f5f7] hover:text-[#ff375f]"
+                isLiked ? "text-[#ed4956]" : "text-[#f5f5f7] hover:text-[#ed4956]"
               }`}
               aria-label={isLiked ? "Unlike post" : "Like post"}
             >
