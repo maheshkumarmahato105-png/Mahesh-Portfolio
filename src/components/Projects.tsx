@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Grid3X3, Rows, Heart, MessageCircle } from "lucide-react";
+import { Grid3X3, Rows, Heart, MessageCircle, Sparkles } from "lucide-react";
 import type { Project, ProjectCategory } from "@/types";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
@@ -128,43 +128,76 @@ export default function Projects({ projects }: ProjectsProps) {
             </AnimatePresence>
           </div>
         ) : (
-          /* Grid Mode: Instagram Profile 3-Column Square Tiles with Hover / Tap Overlay */
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          /* Grid Mode: Instagram Profile Square Tiles (Optimized for Mobile Touch) */
+          <div className="mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
             <AnimatePresence mode="popLayout">
               {filtered.map((project, index) => (
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.92 }}
+                  initial={{ opacity: 0, scale: 0.94 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
+                  exit={{ opacity: 0, scale: 0.94 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => openModal(project)}
-                  className="group relative aspect-square overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] cursor-pointer select-none"
+                  className="group relative aspect-square overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] cursor-pointer select-none shadow-sm hover:border-[#2997ff]/50 hover:shadow-[0_0_20px_rgba(41,151,255,0.2)] transition-all"
                 >
-                  {project.imageUrl ? (
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  ) : (
-                    <ProjectGraphic id={project.id} title={project.title} category={project.category} />
-                  )}
+                  {/* Thumbnail Image or Graphic */}
+                  <div className="h-full w-full">
+                    {project.imageUrl ? (
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <ProjectGraphic id={project.id} title={project.title} category={project.category} />
+                    )}
+                  </div>
 
-                  {/* Instagram-Style Overlay on Hover / Active */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100 p-3 text-center backdrop-blur-xs">
-                    <span className="text-xs font-semibold text-white drop-shadow-md">
+                  {/* Top-Right Instagram Media Badge */}
+                  <div className="absolute right-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-black/65 border border-white/10 text-[#2997ff] backdrop-blur-md shadow-xs">
+                    <Sparkles size={11} />
+                  </div>
+
+                  {/* Mobile-Friendly Bottom Info Vignette (Always visible on touchscreens) */}
+                  <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-2.5 sm:p-3.5 transition-opacity duration-200">
+                    <p className="text-xs sm:text-sm font-semibold text-[#f5f5f7] tracking-tight truncate drop-shadow-sm">
+                      {project.title}
+                    </p>
+                    <div className="mt-0.5 flex items-center justify-between text-[10px] text-[#86868b]">
+                      <span className="font-medium text-[#2997ff] truncate max-w-[60%]">
+                        {project.category}
+                      </span>
+                      <div className="flex items-center gap-2 text-white/90 shrink-0 font-medium">
+                        <span className="flex items-center gap-0.5">
+                          <Heart size={10} className="fill-[#ff375f] text-[#ff375f]" />
+                          <span>{48 + index * 9}</span>
+                        </span>
+                        <span className="flex items-center gap-0.5">
+                          <MessageCircle size={10} className="fill-white/80" />
+                          <span>{2 + index}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Desktop Hover Full-Blur Overlay */}
+                  <div className="hidden sm:flex absolute inset-0 z-20 flex-col items-center justify-center bg-black/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100 p-4 text-center backdrop-blur-xs">
+                    <span className="text-sm font-semibold text-white drop-shadow-md">
                       {project.title}
                     </span>
-                    <div className="mt-2 flex items-center gap-4 text-xs font-bold text-white">
+                    <span className="text-[11px] text-[#2997ff] font-medium mt-0.5">
+                      {project.category}
+                    </span>
+                    <div className="mt-3 flex items-center gap-4 text-xs font-bold text-white">
                       <div className="flex items-center gap-1">
-                        <Heart size={14} className="fill-white" />
+                        <Heart size={14} className="fill-[#ff375f] text-[#ff375f]" />
                         <span>{48 + index * 9}</span>
                       </div>
                       <div className="flex items-center gap-1">
@@ -172,6 +205,9 @@ export default function Projects({ projects }: ProjectsProps) {
                         <span>{2 + index}</span>
                       </div>
                     </div>
+                    <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-medium text-white/80 rounded-full bg-white/10 px-2.5 py-1">
+                      Tap to open sheet
+                    </span>
                   </div>
                 </motion.div>
               ))}
