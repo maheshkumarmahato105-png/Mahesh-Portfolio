@@ -28,9 +28,26 @@ export interface Skill {
   icon: string;
   category: SkillCategory;
   description: string;
+  level?: number;
+  tier?: SkillProficiencyTier;
+  experience?: string;
+  highlights?: string[];
+  usageNote?: string;
+  isCustom?: boolean;
 }
 
-export type SkillCategory = "Frontend" | "Languages" | "Tools" | "Practices";
+export type SkillCategory =
+  | "Frontend"
+  | "Languages"
+  | "Backend"
+  | "Tools"
+  | "Practices";
+
+export type SkillProficiencyTier =
+  | "Core"
+  | "Advanced"
+  | "Proficient"
+  | "Growing";
 
 export interface Project {
   id: string;

@@ -1,5 +1,6 @@
 import { useTheme } from "@/hooks/useTheme";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useSkills } from "@/hooks/useSkills";
 import portfolio from "@/data/portfolio";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -16,6 +17,9 @@ const sectionIds = ["home", "about", "skills", "projects", "contact"];
 export default function App() {
   const { theme, toggleTheme, isDark } = useTheme();
   const { activeSection, setActiveSection } = useActiveSection(sectionIds);
+  const { skills, addSkill, removeSkill, updateCustomSkill } = useSkills(
+    portfolio.skills
+  );
 
   return (
     <div className={`min-h-screen bg-[#0a0a0a] text-[#f5f5f7] selection:bg-[#2997ff] selection:text-white transition-colors duration-500 overflow-x-clip w-full relative ${isDark ? "dark" : "light"}`}>
@@ -27,10 +31,16 @@ export default function App() {
         toggleTheme={toggleTheme}
       />
       <main>
-        <Hero data={portfolio} />
+        <Hero data={portfolio} skillsCount={skills.length} />
         <StoriesBar />
-        <About data={portfolio} />
-        <Skills skills={portfolio.skills} />
+        <About data={portfolio} skillsCount={skills.length} />
+        <Skills
+          skills={skills}
+          projects={portfolio.projects}
+          onAddSkill={addSkill}
+          onUpdateSkill={updateCustomSkill}
+          onRemoveSkill={removeSkill}
+        />
         <Projects projects={portfolio.projects} />
         <Contact data={portfolio} />
       </main>

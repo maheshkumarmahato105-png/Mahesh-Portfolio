@@ -7,9 +7,10 @@ import { smoothScrollTo } from "@/lib/smoothScroll";
 
 interface HeroProps {
   data: PortfolioConfig;
+  skillsCount?: number;
 }
 
-export default function Hero({ data }: HeroProps) {
+export default function Hero({ data, skillsCount }: HeroProps) {
   const { scrollY } = useScroll();
   const reduced = prefersReducedMotion();
 
@@ -43,6 +44,10 @@ export default function Hero({ data }: HeroProps) {
 
   const scrollToWork = () => {
     smoothScrollTo("#projects", { offset: getHeaderOffset() });
+  };
+
+  const scrollToSkills = () => {
+    smoothScrollTo("#skills", { offset: getHeaderOffset() });
   };
 
   const scrollToContact = () => {
@@ -136,15 +141,23 @@ export default function Hero({ data }: HeroProps) {
 
                 {/* Instagram Stats Grid */}
                 <div className="grid flex-1 grid-cols-3 text-center">
-                  <div>
-                    <div className="text-base font-bold text-[#f5f5f7]">5</div>
+                  <button
+                    type="button"
+                    onClick={scrollToWork}
+                    className="cursor-pointer rounded-xl py-1 transition-colors hover:bg-white/4"
+                  >
+                    <div className="text-base font-bold text-[#f5f5f7]">{data.projects.length}</div>
                     <div className="text-[10px] text-[#86868b]">Projects</div>
-                  </div>
-                  <div>
-                    <div className="text-base font-bold text-[#f5f5f7]">10+</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={scrollToSkills}
+                    className="cursor-pointer rounded-xl py-1 transition-colors hover:bg-white/4"
+                  >
+                    <div className="text-base font-bold text-[#f5f5f7]">{skillsCount ?? data.skills.length}</div>
                     <div className="text-[10px] text-[#86868b]">Skills</div>
-                  </div>
-                  <div>
+                  </button>
+                  <div className="py-1">
                     <div className="text-base font-bold text-[#2997ff]">100%</div>
                     <div className="text-[10px] text-[#86868b]">Responsive</div>
                   </div>

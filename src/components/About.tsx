@@ -6,6 +6,7 @@ import SectionHeading from "@/components/SectionHeading";
 
 interface AboutProps {
   data: PortfolioConfig;
+  skillsCount?: number;
 }
 
 const focusAreas = [
@@ -31,7 +32,7 @@ const focusAreas = [
   },
 ];
 
-export default function About({ data }: AboutProps) {
+export default function About({ data, skillsCount }: AboutProps) {
   const reduced = prefersReducedMotion();
 
   return (
@@ -132,7 +133,9 @@ export default function About({ data }: AboutProps) {
                   className="rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#161616] p-3 sm:p-5 text-center transition-all hover:border-[#2997ff]/40 hover:shadow-[0_0_20px_rgba(41,151,255,0.1)] cursor-pointer"
                 >
                   <div className="text-2xl font-semibold tracking-tight text-[#f5f5f7] sm:text-4xl">
-                    {stat.value}
+                    {stat.label === "Technologies" && skillsCount !== undefined
+                      ? skillsCount
+                      : stat.value}
                     {stat.suffix && (
                       <span className="text-[#2997ff]">{stat.suffix}</span>
                     )}
